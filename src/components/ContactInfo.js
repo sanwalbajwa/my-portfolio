@@ -41,7 +41,7 @@ export default function ContactInfo() {
         <CardHeader>
           <CardTitle className="text-2xl">Let's Connect</CardTitle>
           <p className="text-gray-600">
-            I'm always open to discussing new opportunities, creative projects, 
+            I&apos;m always open to discussing new opportunities, creative projects, 
             or potential collaborations.
           </p>
         </CardHeader>

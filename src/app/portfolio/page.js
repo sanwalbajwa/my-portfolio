@@ -21,7 +21,7 @@ export default async function Portfolio() {
             My Portfolio
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            A collection of projects I've worked on, showcasing different technologies 
+            A collection of projects I&apos;ve worked on, showcasing different technologies 
             and design approaches.
           </p>
         </div>

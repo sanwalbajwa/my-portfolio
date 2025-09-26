@@ -16,7 +16,7 @@ export default function Contact() {
             Get In Touch
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            I'd love to hear from you! Whether you have a project in mind, 
+            I&apos;d love to hear from you! Whether you have a project in mind, 
             want to collaborate, or just want to say hello, feel free to reach out.
           </p>
         </div>

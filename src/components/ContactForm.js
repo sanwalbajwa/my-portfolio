@@ -59,7 +59,7 @@ export default function ContactForm() {
         <CardHeader>
           <CardTitle className="text-2xl">Send a Message</CardTitle>
           <p className="text-gray-600">
-            Fill out the form below and I'll get back to you as soon as possible.
+            Fill out the form below and I&apos;ll get back to you as soon as possible.
           </p>
         </CardHeader>
         
@@ -123,7 +123,7 @@ export default function ContactForm() {
                 className="flex items-center gap-2 text-green-600 bg-green-50 p-3 rounded-lg"
               >
                 <CheckCircle size={18} />
-                <span className="text-sm">Message sent successfully! I'll get back to you soon.</span>
+                <span className="text-sm">Message sent successfully! I&apos;ll get back to you soon.</span>
               </motion.div>
             )}
 
