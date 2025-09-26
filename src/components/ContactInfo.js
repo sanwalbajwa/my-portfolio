@@ -39,7 +39,7 @@ export default function ContactInfo() {
     >
       <Card className="h-full">
         <CardHeader>
-          <CardTitle className="text-2xl">Let's Connect</CardTitle>
+          <CardTitle className="text-2xl">Let&apos;s Connect</CardTitle>
           <p className="text-gray-600">
             I&apos;m always open to discussing new opportunities, creative projects, 
             or potential collaborations.
