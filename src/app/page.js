@@ -1,16 +1,13 @@
-import { supabase } from '../lib/supabase'
+import HeroSection from '../components/HeroSection'
+import SkillsSection from '../components/SkillsSection'
+import FeaturedWork from '../components/FeaturedWork'
 
-export default async function Home() {
-  // Test database connection
-  const { data: projects, error } = await supabase
-    .from('projects')
-    .select('*')
-
+export default function Home() {
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold mb-4">Portfolio Test</h1>
-      <p>Database Status: {error ? 'Error connecting' : 'Connected successfully'}</p>
-      <p>Projects count: {projects?.length || 0}</p>
+    <div className="min-h-screen">
+      <HeroSection />
+      <SkillsSection />
+      <FeaturedWork />
     </div>
   )
 }
