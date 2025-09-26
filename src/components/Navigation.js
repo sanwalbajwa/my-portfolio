@@ -20,7 +20,7 @@ export default function Navigation() {
         <div className="flex justify-between h-16">
           <div className="flex">
             <Link href="/" className="flex items-center px-4 text-lg font-medium">
-              Your Name
+              Sanwal Bajwa
             </Link>
           </div>
 

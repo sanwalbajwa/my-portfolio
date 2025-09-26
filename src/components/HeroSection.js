@@ -16,11 +16,11 @@ export default function HeroSection() {
           >
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
               Hi, I&apos;m{' '}
-              <span className="text-blue-600">Your Name</span>
+              <span className="text-blue-600">Sanwal Bajwa</span>
             </h1>
             
             <h2 className="text-xl md:text-2xl text-gray-600 mb-8">
-              Full Stack Developer & UI/UX Designer
+              Full Stack Developer
             </h2>
             
             <p className="text-lg text-gray-700 max-w-2xl mx-auto mb-10">

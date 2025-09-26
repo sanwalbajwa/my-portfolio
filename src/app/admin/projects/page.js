@@ -5,25 +5,33 @@ import { Button } from '../../../components/ui/button'
 import { Input } from '../../../components/ui/input'
 import { Textarea } from '../../../components/ui/textarea'
 import { Badge } from '../../../components/ui/badge'
-import { Plus, Edit, Trash2, Save, X, ExternalLink } from 'lucide-react'
+import { Plus, Edit, Trash2, Save, X, ExternalLink, Github, Lock } from 'lucide-react'
 import { supabase } from '../../../lib/supabase'
 import Image from 'next/image'
 
 export default function AdminProjects() {
   const [projects, setProjects] = useState([])
+  const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(true)
   const [editingId, setEditingId] = useState(null)
   const [showAddForm, setShowAddForm] = useState(false)
+  const [showCategoryForm, setShowCategoryForm] = useState(false)
+  const [newCategoryName, setNewCategoryName] = useState('')
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     tech_stack: '',
-    link: '',
-    image: ''
+    image: '',
+    category: 'Web Development',
+    is_live: false,
+    live_url: '',
+    is_code_available: true,
+    github_url: ''
   })
 
   useEffect(() => {
     fetchProjects()
+    fetchCategories()
   }, [])
 
   const fetchProjects = async () => {
@@ -36,16 +44,40 @@ export default function AdminProjects() {
     setLoading(false)
   }
 
+  const fetchCategories = async () => {
+    const { data, error } = await supabase
+      .from('project_categories')
+      .select('*')
+      .order('name')
+    
+    if (!error) setCategories(data || [])
+  }
+
   const handleInputChange = (e) => {
-    const { name, value } = e.target
+    const { name, value, type, checked } = e.target
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: type === 'checkbox' ? checked : value
     }))
   }
 
   const formatTechStack = (techString) => {
     return techString.split(',').map(tech => tech.trim()).filter(tech => tech)
+  }
+
+  const handleAddCategory = async () => {
+    if (!newCategoryName.trim()) return
+
+    const { error } = await supabase
+      .from('project_categories')
+      .insert([{ name: newCategoryName.trim() }])
+
+    if (!error) {
+      setNewCategoryName('')
+      setShowCategoryForm(false)
+      fetchCategories()
+      setFormData(prev => ({ ...prev, category: newCategoryName.trim() }))
+    }
   }
 
   const handleAdd = async () => {
@@ -61,7 +93,17 @@ export default function AdminProjects() {
       .insert([projectData])
 
     if (!error) {
-      setFormData({ title: '', description: '', tech_stack: '', link: '', image: '' })
+      setFormData({
+        title: '',
+        description: '',
+        tech_stack: '',
+        image: '',
+        category: 'Web Development',
+        is_live: false,
+        live_url: '',
+        is_code_available: true,
+        github_url: ''
+      })
       setShowAddForm(false)
       fetchProjects()
     }
@@ -70,7 +112,9 @@ export default function AdminProjects() {
   const handleEdit = (project) => {
     setFormData({
       ...project,
-      tech_stack: Array.isArray(project.tech_stack) ? project.tech_stack.join(', ') : project.tech_stack
+      tech_stack: Array.isArray(project.tech_stack) ? project.tech_stack.join(', ') : project.tech_stack,
+      is_live: project.is_live || false,
+      is_code_available: project.is_code_available !== false
     })
     setEditingId(project.id)
   }
@@ -88,7 +132,17 @@ export default function AdminProjects() {
 
     if (!error) {
       setEditingId(null)
-      setFormData({ title: '', description: '', tech_stack: '', link: '', image: '' })
+      setFormData({
+        title: '',
+        description: '',
+        tech_stack: '',
+        image: '',
+        category: 'Web Development',
+        is_live: false,
+        live_url: '',
+        is_code_available: true,
+        github_url: ''
+      })
       fetchProjects()
     }
   }
@@ -107,7 +161,17 @@ export default function AdminProjects() {
   const handleCancel = () => {
     setEditingId(null)
     setShowAddForm(false)
-    setFormData({ title: '', description: '', tech_stack: '', link: '', image: '' })
+    setFormData({
+      title: '',
+      description: '',
+      tech_stack: '',
+      image: '',
+      category: 'Web Development',
+      is_live: false,
+      live_url: '',
+      is_code_available: true,
+      github_url: ''
+    })
   }
 
   if (loading) {
@@ -121,11 +185,46 @@ export default function AdminProjects() {
           <h1 className="text-3xl font-bold text-gray-900">Projects</h1>
           <p className="text-gray-600">Manage your portfolio projects</p>
         </div>
-        <Button onClick={() => setShowAddForm(true)} className="flex items-center gap-2">
-          <Plus size={16} />
-          Add New Project
-        </Button>
+        <div className="flex gap-2">
+          <Button 
+            variant="outline" 
+            onClick={() => setShowCategoryForm(true)}
+            className="flex items-center gap-2"
+          >
+            <Plus size={16} />
+            Add Category
+          </Button>
+          <Button onClick={() => setShowAddForm(true)} className="flex items-center gap-2">
+            <Plus size={16} />
+            Add New Project
+          </Button>
+        </div>
       </div>
+
+      {/* Add Category Form */}
+      {showCategoryForm && (
+        <Card className="mb-4">
+          <CardContent className="p-4">
+            <div className="flex gap-2 items-end">
+              <div className="flex-1">
+                <label className="block text-sm font-medium mb-1">Category Name</label>
+                <Input
+                  value={newCategoryName}
+                  onChange={(e) => setNewCategoryName(e.target.value)}
+                  placeholder="e.g. Machine Learning, E-commerce"
+                />
+              </div>
+              <Button onClick={handleAddCategory}>Add</Button>
+              <Button variant="outline" onClick={() => {
+                setShowCategoryForm(false)
+                setNewCategoryName('')
+              }}>
+                Cancel
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Add/Edit Form */}
       {(showAddForm || editingId) && (
@@ -133,10 +232,11 @@ export default function AdminProjects() {
           <CardHeader>
             <CardTitle>{editingId ? 'Edit Project' : 'Add New Project'}</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-6">
+            {/* Basic Info */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium mb-2">Title</label>
+                <label className="block text-sm font-medium mb-2">Project Title *</label>
                 <Input
                   name="title"
                   value={formData.title}
@@ -145,29 +245,35 @@ export default function AdminProjects() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Project Link</label>
-                <Input
-                  name="link"
-                  value={formData.link}
+                <label className="block text-sm font-medium mb-2">Category *</label>
+                <select
+                  name="category"
+                  value={formData.category}
                   onChange={handleInputChange}
-                  placeholder="https://your-project.com"
-                />
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  {categories.map((cat) => (
+                    <option key={cat.id} value={cat.name}>
+                      {cat.name}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
             
             <div>
-              <label className="block text-sm font-medium mb-2">Description</label>
+              <label className="block text-sm font-medium mb-2">Description *</label>
               <Textarea
                 name="description"
                 value={formData.description}
                 onChange={handleInputChange}
                 rows={4}
-                placeholder="Describe your project..."
+                placeholder="Describe your project in detail..."
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">Tech Stack (comma-separated)</label>
+              <label className="block text-sm font-medium mb-2">Tech Stack (comma-separated) *</label>
               <Input
                 name="tech_stack"
                 value={formData.tech_stack}
@@ -177,13 +283,76 @@ export default function AdminProjects() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">Image URL</label>
+              <label className="block text-sm font-medium mb-2">Project Image URL</label>
               <Input
                 name="image"
                 value={formData.image}
                 onChange={handleInputChange}
                 placeholder="https://images.unsplash.com/photo-..."
               />
+            </div>
+
+            {/* Project Status & URLs */}
+            <div className="border rounded-lg p-4 bg-gray-50">
+              <h3 className="font-medium mb-4">Project Status & Links</h3>
+              
+              {/* Live Site Section */}
+              <div className="space-y-3 mb-4">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    id="is_live"
+                    name="is_live"
+                    checked={formData.is_live}
+                    onChange={handleInputChange}
+                    className="rounded"
+                  />
+                  <label htmlFor="is_live" className="text-sm font-medium">
+                    Project is live and publicly accessible
+                  </label>
+                </div>
+                
+                {formData.is_live && (
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Live Site URL</label>
+                    <Input
+                      name="live_url"
+                      value={formData.live_url}
+                      onChange={handleInputChange}
+                      placeholder="https://your-project.com"
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* Code Availability Section */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    id="is_code_available"
+                    name="is_code_available"
+                    checked={formData.is_code_available}
+                    onChange={handleInputChange}
+                    className="rounded"
+                  />
+                  <label htmlFor="is_code_available" className="text-sm font-medium">
+                    Source code is publicly available
+                  </label>
+                </div>
+                
+                {formData.is_code_available && (
+                  <div>
+                    <label className="block text-sm font-medium mb-1">GitHub Repository URL</label>
+                    <Input
+                      name="github_url"
+                      value={formData.github_url}
+                      onChange={handleInputChange}
+                      placeholder="https://github.com/username/repository"
+                    />
+                  </div>
+                )}
+              </div>
             </div>
 
             <div className="flex gap-2">
@@ -224,31 +393,44 @@ export default function AdminProjects() {
                 {/* Project Info */}
                 <div className="flex-1">
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-xl font-semibold">{project.title}</h3>
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="text-xl font-semibold">{project.title}</h3>
+                        <Badge variant="outline">{project.category}</Badge>
+                      </div>
+                      <div className="flex items-center gap-4 text-sm text-gray-500 mb-2">
+                        <span>Created: {new Date(project.created_at).toLocaleDateString()}</span>
+                        <span className={`flex items-center gap-1 ${project.is_live ? 'text-green-600' : 'text-gray-500'}`}>
+                          {project.is_live ? '🟢 Live' : '🔒 Private'}
+                        </span>
+                        <span className={`flex items-center gap-1 ${project.is_code_available ? 'text-blue-600' : 'text-gray-500'}`}>
+                          {project.is_code_available ? '📂 Open Source' : '🔒 Private Code'}
+                        </span>
+                      </div>
+                    </div>
                     <div className="flex gap-2">
-                      {project.link && (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          asChild
-                        >
-                          <a href={project.link} target="_blank" rel="noopener noreferrer">
+                      {/* Live Site Link */}
+                      {project.is_live && project.live_url && (
+                        <Button variant="outline" size="sm" asChild>
+                          <a href={project.live_url} target="_blank" rel="noopener noreferrer">
                             <ExternalLink size={14} />
                           </a>
                         </Button>
                       )}
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleEdit(project)}
-                      >
+                      
+                      {/* GitHub Link */}
+                      {project.is_code_available && project.github_url && (
+                        <Button variant="outline" size="sm" asChild>
+                          <a href={project.github_url} target="_blank" rel="noopener noreferrer">
+                            <Github size={14} />
+                          </a>
+                        </Button>
+                      )}
+                      
+                      <Button variant="outline" size="sm" onClick={() => handleEdit(project)}>
                         <Edit size={14} />
                       </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleDelete(project.id)}
-                      >
+                      <Button variant="outline" size="sm" onClick={() => handleDelete(project.id)}>
                         <Trash2 size={14} />
                       </Button>
                     </div>
@@ -256,17 +438,13 @@ export default function AdminProjects() {
                   
                   <p className="text-gray-600 mb-3 line-clamp-2">{project.description}</p>
                   
-                  <div className="flex flex-wrap gap-2 mb-2">
+                  <div className="flex flex-wrap gap-2">
                     {project.tech_stack && project.tech_stack.map((tech, index) => (
                       <Badge key={index} variant="secondary" className="text-xs">
                         {tech}
                       </Badge>
                     ))}
                   </div>
-                  
-                  <span className="text-sm text-gray-500">
-                    Created: {new Date(project.created_at).toLocaleDateString()}
-                  </span>
                 </div>
               </div>
             </CardContent>
