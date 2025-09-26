@@ -1,6 +1,6 @@
 import { Poppins } from 'next/font/google'
 import './globals.css'
-import Navigation from '../components/Navigation'
+import ConditionalNavigation from '../components/ConditionalNavigation'
 
 const poppins = Poppins({ 
   subsets: ['latin'],
@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <Navigation />
+        <ConditionalNavigation />
         <main>{children}</main>
       </body>
     </html>

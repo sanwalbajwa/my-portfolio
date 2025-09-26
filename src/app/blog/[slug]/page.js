@@ -93,21 +93,38 @@ export default async function BlogPost({ params }) {
         </header>
 
         {/* Article Content */}
-        <article className="prose prose-lg max-w-none">
+        <div className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-p:leading-relaxed prose-code:bg-gray-100 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm prose-pre:bg-gray-100 prose-pre:p-4 prose-pre:rounded-lg prose-pre:overflow-x-auto">
           <ReactMarkdown
-            className="leading-relaxed"
             components={{
-              h1: ({ children }) => <h1 className="text-3xl font-bold mt-8 mb-4">{children}</h1>,
-              h2: ({ children }) => <h2 className="text-2xl font-semibold mt-8 mb-4">{children}</h2>,
-              h3: ({ children }) => <h3 className="text-xl font-semibold mt-6 mb-3">{children}</h3>,
+              h1: ({ children }) => <h1 className="text-3xl font-bold mt-8 mb-4 text-gray-900">{children}</h1>,
+              h2: ({ children }) => <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900">{children}</h2>,
+              h3: ({ children }) => <h3 className="text-xl font-semibold mt-6 mb-3 text-gray-900">{children}</h3>,
               p: ({ children }) => <p className="mb-6 text-gray-700 leading-relaxed">{children}</p>,
-              code: ({ children }) => <code className="bg-gray-100 px-2 py-1 rounded text-sm">{children}</code>,
+              code: ({ children, inline }) => 
+                inline ? (
+                  <code className="bg-gray-100 px-2 py-1 rounded text-sm font-mono">{children}</code>
+                ) : (
+                  <code className="block bg-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm">{children}</code>
+                ),
               pre: ({ children }) => <pre className="bg-gray-100 p-4 rounded-lg overflow-x-auto mb-6">{children}</pre>,
+              ul: ({ children }) => <ul className="list-disc pl-6 mb-6 space-y-2">{children}</ul>,
+              ol: ({ children }) => <ol className="list-decimal pl-6 mb-6 space-y-2">{children}</ol>,
+              li: ({ children }) => <li className="text-gray-700">{children}</li>,
+              blockquote: ({ children }) => (
+                <blockquote className="border-l-4 border-blue-500 pl-4 my-6 italic text-gray-600">
+                  {children}
+                </blockquote>
+              ),
+              a: ({ children, href }) => (
+                <a href={href} className="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">
+                  {children}
+                </a>
+              ),
             }}
           >
             {blog.content}
           </ReactMarkdown>
-        </article>
+        </div>
 
         {/* Footer */}
         <footer className="mt-12 pt-8 border-t border-gray-200">

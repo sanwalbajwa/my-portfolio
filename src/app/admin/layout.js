@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { supabase } from '../../lib/supabase'
 import { Button } from '../../components/ui/button'
 import { LogOut, Home, FileText, Award, Mail, PlusCircle } from 'lucide-react'
@@ -10,8 +10,16 @@ export default function AdminLayout({ children }) {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
   const router = useRouter()
+  const pathname = usePathname()
 
+  // Always call useEffect, but conditionally execute logic
   useEffect(() => {
+    // Don't run auth logic for login page
+    if (pathname === '/admin/login') {
+      setLoading(false)
+      return
+    }
+
     const getUser = async () => {
       const { data: { user } } = await supabase.auth.getUser()
       setUser(user)
@@ -34,10 +42,15 @@ export default function AdminLayout({ children }) {
     })
 
     return () => subscription.unsubscribe()
-  }, [router])
+  }, [router, pathname])
 
   const handleSignOut = async () => {
     await supabase.auth.signOut()
+  }
+
+  // Return login page without admin layout
+  if (pathname === '/admin/login') {
+    return children
   }
 
   if (loading) {
