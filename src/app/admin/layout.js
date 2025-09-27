@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { supabase } from '../../lib/supabase'
 import { Button } from '../../components/ui/button'
-import { LogOut, Home, FileText, Award, Mail, PlusCircle } from 'lucide-react'
+import { LogOut, Home, FileText, Award, Mail, PlusCircle, Upload } from 'lucide-react'
 import Link from 'next/link'
 
 export default function AdminLayout({ children }) {
@@ -12,9 +12,7 @@ export default function AdminLayout({ children }) {
   const router = useRouter()
   const pathname = usePathname()
 
-  // Always call useEffect, but conditionally execute logic
   useEffect(() => {
-    // Don't run auth logic for login page
     if (pathname === '/admin/login') {
       setLoading(false)
       return
@@ -48,7 +46,6 @@ export default function AdminLayout({ children }) {
     await supabase.auth.signOut()
   }
 
-  // Return login page without admin layout
   if (pathname === '/admin/login') {
     return children
   }
@@ -98,35 +95,55 @@ export default function AdminLayout({ children }) {
             <div className="space-y-2">
               <Link
                 href="/admin"
-                className="flex items-center gap-3 px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100"
+                className={`flex items-center gap-3 px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100 ${
+                  pathname === '/admin' ? 'bg-blue-50 text-blue-700' : ''
+                }`}
               >
                 <Home size={18} />
                 Dashboard
               </Link>
               <Link
                 href="/admin/blogs"
-                className="flex items-center gap-3 px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100"
+                className={`flex items-center gap-3 px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100 ${
+                  pathname === '/admin/blogs' ? 'bg-blue-50 text-blue-700' : ''
+                }`}
               >
                 <FileText size={18} />
                 Blog Posts
               </Link>
               <Link
                 href="/admin/projects"
-                className="flex items-center gap-3 px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100"
+                className={`flex items-center gap-3 px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100 ${
+                  pathname === '/admin/projects' ? 'bg-blue-50 text-blue-700' : ''
+                }`}
               >
                 <PlusCircle size={18} />
                 Projects
               </Link>
               <Link
                 href="/admin/certificates"
-                className="flex items-center gap-3 px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100"
+                className={`flex items-center gap-3 px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100 ${
+                  pathname === '/admin/certificates' ? 'bg-blue-50 text-blue-700' : ''
+                }`}
               >
                 <Award size={18} />
                 Certificates
               </Link>
+              {/* Add CV Management Link */}
+              <Link
+                href="/admin/cv"
+                className={`flex items-center gap-3 px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100 ${
+                  pathname === '/admin/cv' ? 'bg-blue-50 text-blue-700' : ''
+                }`}
+              >
+                <Upload size={18} />
+                CV Management
+              </Link>
               <Link
                 href="/admin/contacts"
-                className="flex items-center gap-3 px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100"
+                className={`flex items-center gap-3 px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100 ${
+                  pathname === '/admin/contacts' ? 'bg-blue-50 text-blue-700' : ''
+                }`}
               >
                 <Mail size={18} />
                 Contact Messages

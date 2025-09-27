@@ -4,8 +4,47 @@ import { Download, Mail, ArrowRight } from 'lucide-react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
+import { supabase } from '../lib/supabase' // Add this import
 
 export default function HeroSection() {
+  // Add the downloadCV function here
+  const downloadCV = async () => {
+    try {
+      // Get active CV from database
+      const { data: activeCV, error } = await supabase
+        .from('cv_management')
+        .select('*')
+        .eq('is_active', true)
+        .single()
+
+      if (error || !activeCV) {
+        alert('CV not available at the moment. Please try again later.')
+        return
+      }
+
+      // Download from storage
+      const { data: fileData, error: downloadError } = await supabase.storage
+        .from('documents')
+        .download(activeCV.filename)
+
+      if (downloadError) throw downloadError
+
+      // Create download
+      const blob = new Blob([fileData], { type: 'application/pdf' })
+      const url = window.URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = activeCV.original_name
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      window.URL.revokeObjectURL(url)
+
+    } catch (error) {
+      console.error('Download error:', error)
+      alert('Sorry, CV download failed. Please try again.')
+    }
+  }
   return (
     <section className="bg-gradient-to-br from-blue-50 to-indigo-100 py-20 min-h-[80vh] flex items-center">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -43,11 +82,15 @@ export default function HeroSection() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="flex flex-col sm:flex-row gap-4 mb-10"
             >
-              <Button size="lg" className="flex items-center gap-2 group">
-                <Download size={18} />
-                Download CV
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-              </Button>
+              <Button 
+              size="lg" 
+              className="flex items-center gap-2 group"
+              onClick={downloadCV} // Add this onClick handler
+            >
+              <Download size={18} />
+              Download CV
+              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            </Button>
               
               <Button variant="outline" size="lg" asChild className="group">
                 <Link href="#contact" className="flex items-center gap-2">
