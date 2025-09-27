@@ -1,6 +1,7 @@
 "use client"
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import IconCloud from './IconCloud'
 import { 
   Code2, Database, Palette, Server, Globe, 
   Zap, FileCode, Cpu, Settings, Monitor,
@@ -15,8 +16,8 @@ export default function SkillsSection() {
   // Skills data organized by category with proper icons
   const skillsData = {
     'Frontend': [
-      { name: 'HTML', level: 95, icon: Globe },
-      { name: 'CSS', level: 90, icon: Palette },
+      // { name: 'HTML', level: 95, icon: Globe },
+      // { name: 'CSS', level: 90, icon: Palette },
       { name: 'JavaScript', level: 88, icon: Zap },
       { name: 'jQuery', level: 85, icon: Code2 },
       { name: 'ReactJS', level: 90, icon: Layers },
@@ -46,18 +47,28 @@ export default function SkillsSection() {
     ]
   }
 
-  // All skills for the left side visualization
-  const allSkills = [
-    { name: 'HTML', icon: Globe, color: 'from-orange-400 to-red-500' },
-    { name: 'CSS', icon: Palette, color: 'from-blue-400 to-blue-600' },
-    { name: 'JavaScript', icon: Zap, color: 'from-yellow-400 to-orange-500' },
-    { name: 'ReactJS', icon: Layers, color: 'from-blue-500 to-cyan-500' },
-    { name: 'NextJS', icon: Monitor, color: 'from-gray-600 to-gray-800' },
-    { name: 'PHP', icon: Server, color: 'from-purple-500 to-indigo-600' },
-    { name: 'Python', icon: Terminal, color: 'from-green-400 to-blue-500' },
-    { name: 'MongoDB', icon: Database, color: 'from-green-500 to-green-700' },
-    { name: 'WordPress', icon: FileCode, color: 'from-blue-600 to-purple-600' },
-    { name: 'Shopify', icon: ShoppingCart, color: 'from-green-600 to-teal-600' }
+  // Icon slugs for the cloud (Simple Icons slugs)
+  const iconSlugs = [
+    'html5',
+    'css3', 
+    'javascript',
+    'jquery',
+    'php',
+    'mysql',
+    'mongodb',
+    'supabase',
+    'react',
+    'nextdotjs',
+    'python',
+    'django',
+    'wordpress',
+    'shopify',
+    'nodejs',
+    'tailwindcss',
+    'bootstrap',
+    'git',
+    'github',
+    'vercel'
   ]
 
   useEffect(() => {
@@ -66,185 +77,61 @@ export default function SkillsSection() {
 
   const categories = Object.keys(skillsData)
 
-// 3D Grid Layout with guaranteed spacing
-const SkillsVisualization = () => {
-  return (
-    <div className="relative w-full h-96 flex items-center justify-center overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-purple-600" />
-      </div>
-
-      {/* 3D Grid Layout */}
-      <div className="relative">
-        {/* Grid Container with CSS Grid */}
-        <div className="grid grid-cols-4 gap-8 items-center justify-center max-w-lg">
-          {allSkills.slice(0, 8).map((skill, index) => {
-            // Skip center positions to create space for central hub
-            const isCenter = index === 1 || index === 2 || index === 5 || index === 6;
-            
-            if (isCenter) {
-              return <div key={`spacer-${index}`} className="w-20 h-20" />; // Empty spacer
-            }
-
-            return (
-              <motion.div
-                key={skill.name}
-                initial={{ opacity: 0, scale: 0, rotateY: -180 }}
-                animate={{ 
-                  opacity: 1, 
-                  scale: 1,
-                  rotateY: 0,
-                  y: [0, -10, 0],
-                }}
-                transition={{
-                  duration: 0.6,
-                  delay: index * 0.1,
-                  y: {
-                    duration: 3 + (index % 2),
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }
-                }}
-                whileHover={{ 
-                  scale: 1.2,
-                  rotateY: 15,
-                  z: 50,
-                  transition: { duration: 0.2 }
-                }}
-                className="relative"
-              >
-                <div className={`w-20 h-20 bg-gradient-to-br ${skill.color} rounded-2xl shadow-lg flex items-center justify-center cursor-pointer transform transition-all duration-300 hover:shadow-2xl`}>
-                  <skill.icon className="text-white" size={32} />
-                </div>
-                
-                {/* Skill name tooltip */}
-                <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded-full opacity-0 hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                  {skill.name}
-                </div>
-
-                {/* Floating particles around each card */}
-                <motion.div
-                  className="absolute -top-2 -right-2 w-2 h-2 bg-blue-400 rounded-full"
-                  animate={{
-                    scale: [1, 1.5, 1],
-                    opacity: [0.5, 1, 0.5]
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    delay: index * 0.3
-                  }}
-                />
-              </motion.div>
-            )
-          })}
-        </div>
-
-        {/* Central Hub - Positioned absolutely in center */}
+  // Icon Cloud Visualization
+  const SkillsVisualization = () => {
+    return (
+      <div className="relative w-full h-96 flex items-center justify-center overflow-hidden">
+        {/* Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-purple-50/50 rounded-2xl"></div>
+        
+        {/* Icon Cloud */}
         <motion.div
-          className="absolute inset-0 flex items-center justify-center pointer-events-none"
-          initial={{ scale: 0, rotate: -180 }}
-          animate={{ scale: 1, rotate: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          className="relative"
         >
-          <div className="relative pointer-events-auto">
-            <motion.div
-              className="w-24 h-24 bg-gradient-to-br from-blue-600 to-purple-600 rounded-3xl shadow-2xl flex items-center justify-center cursor-pointer"
-              animate={{ 
-                rotate: [0, 360],
-                scale: [1, 1.1, 1]
-              }}
-              transition={{
-                rotate: { duration: 15, repeat: Infinity, ease: "linear" },
-                scale: { duration: 3, repeat: Infinity, ease: "easeInOut" }
-              }}
-              whileHover={{ scale: 1.2 }}
-            >
-              <Code2 className="text-white" size={36} />
-            </motion.div>
-            
-            {/* Tech count badge */}
-            <motion.div
-              className="absolute -top-2 -right-2 bg-yellow-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center"
-              animate={{ rotate: [0, 10, -10, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              {allSkills.length}
-            </motion.div>
+          <IconCloud iconSlugs={iconSlugs} />
+        </motion.div>
+
+        {/* Floating info badges */}
+        {/* <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1, duration: 0.6 }}
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg border border-gray-200"
+        >
+          <div className="text-center">
+            <div className="text-sm text-gray-600">Interactive • Rotate with mouse</div>
+          </div>
+        </motion.div> */}
+
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 1.2, duration: 0.6 }}
+          className="absolute top-8 left-8 bg-white/90 backdrop-blur-sm px-3 py-2 rounded-lg shadow-md border border-gray-200"
+        >
+          <div className="text-center">
+            <div className="text-lg font-bold text-blue-600">{iconSlugs.length}+</div>
+            <div className="text-xs text-gray-600">Technologies</div>
           </div>
         </motion.div>
 
-        {/* Additional floating skills around the grid */}
-        {allSkills.slice(8).map((skill, index) => {
-          const positions = [
-            { top: '10%', left: '20%' },
-            { top: '20%', right: '15%' },
-            { bottom: '20%', left: '15%' },
-            { bottom: '10%', right: '20%' }
-          ];
-          
-          const position = positions[index % positions.length];
-          
-          return (
-            <motion.div
-              key={`floating-${skill.name}`}
-              className="absolute"
-              style={position}
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ 
-                opacity: 1, 
-                scale: 1,
-                rotate: [0, 5, -5, 0],
-                y: [0, -15, 0]
-              }}
-              transition={{
-                duration: 0.8,
-                delay: 1 + index * 0.2,
-                rotate: { duration: 4, repeat: Infinity },
-                y: { duration: 3, repeat: Infinity, ease: "easeInOut" }
-              }}
-              whileHover={{ scale: 1.3, rotate: 15 }}
-            >
-              <div className={`w-16 h-16 bg-gradient-to-br ${skill.color} rounded-xl shadow-md flex items-center justify-center cursor-pointer`}>
-                <skill.icon className="text-white" size={24} />
-              </div>
-              
-              {/* Tooltip */}
-              <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded opacity-0 hover:opacity-100 transition-opacity whitespace-nowrap">
-                {skill.name}
-              </div>
-            </motion.div>
-          )
-        })}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 1.4, duration: 0.6 }}
+          className="absolute bottom-8 right-8 bg-white/90 backdrop-blur-sm px-3 py-2 rounded-lg shadow-md border border-gray-200"
+        >
+          <div className="text-center">
+            <div className="text-lg font-bold text-purple-600">2+</div>
+            <div className="text-xs text-gray-600">Years Exp</div>
+          </div>
+        </motion.div>
       </div>
-
-      {/* Animated background elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        {[...Array(5)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-blue-400 rounded-full opacity-30"
-            style={{
-              left: `${20 + i * 15}%`,
-              top: `${30 + i * 10}%`
-            }}
-            animate={{
-              scale: [1, 2, 1],
-              opacity: [0.3, 0.8, 0.3],
-              y: [0, -20, 0]
-            }}
-            transition={{
-              duration: 3 + i,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-        ))}
-      </div>
-    </div>
-  )
-}
+    )
+  }
 
   if (!mounted) {
     return (
@@ -282,7 +169,7 @@ const SkillsVisualization = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Side - Modern Skills Visualization */}
+          {/* Left Side - Interactive Icon Cloud */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -375,7 +262,7 @@ const SkillsVisualization = () => {
                 <div className="text-sm opacity-90">Categories</div>
               </div> */}
               <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg p-4 text-white text-center">
-                <div className="text-2xl font-bold">{allSkills.length}+</div>
+                <div className="text-2xl font-bold">{iconSlugs.length}+</div>
                 <div className="text-sm opacity-90">Technologies</div>
               </div>
             </motion.div>
