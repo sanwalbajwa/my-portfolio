@@ -6,7 +6,7 @@ import {
   Code2, Database, Palette, Server, Globe, 
   Zap, FileCode, Cpu, Settings, Monitor,
   Layers, ShoppingCart, Puzzle, Terminal,
-  Braces
+  Braces, Github, Container
 } from 'lucide-react'
 
 export default function SkillsSection() {
@@ -17,7 +17,7 @@ export default function SkillsSection() {
   const skillsData = {
     'Frontend': [
       // { name: 'HTML', level: 95, icon: Globe },
-      // { name: 'CSS', level: 90, icon: Palette },
+      { name: 'Tailwind', level: 90, icon: Palette },
       { name: 'JavaScript', level: 88, icon: Zap },
       { name: 'jQuery', level: 85, icon: Code2 },
       { name: 'ReactJS', level: 90, icon: Layers },
@@ -44,6 +44,11 @@ export default function SkillsSection() {
       { name: 'PHP', level: 85, icon: Code2 },
       { name: 'Python', level: 80, icon: Terminal },
       { name: 'SQL', level: 85, icon: Database }
+    ],
+    'Tools': [
+      { name: 'GitHub', level: 60, icon: Github },
+      { name: 'Vercel', level: 85, icon: Zap },
+      { name: 'Docker', level: 40, icon: Container }
     ]
   }
 
@@ -68,7 +73,8 @@ export default function SkillsSection() {
     'bootstrap',
     'git',
     'github',
-    'vercel'
+    'vercel',
+    'docker'
   ]
 
   useEffect(() => {

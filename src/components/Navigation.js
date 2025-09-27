@@ -11,7 +11,7 @@ export default function Navigation() {
     { name: 'Portfolio', href: '/portfolio' },
     { name: 'Certificates', href: '/certificates' },
     { name: 'Blog', href: '/blog' },
-    { name: 'Contact', href: '/contact' },
+    { name: 'Contact', href: '#contact' },
   ]
 
   return (

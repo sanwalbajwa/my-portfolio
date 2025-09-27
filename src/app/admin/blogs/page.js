@@ -30,7 +30,8 @@ export default function AdminBlogs() {
     meta_keywords: '',
     status: 'draft',
     author: 'Sanwal Bajwa',
-    tags: ''
+    tags: '',
+    is_featured: false
   })
 
   useEffect(() => {
@@ -225,7 +226,8 @@ export default function AdminBlogs() {
       meta_keywords: '',
       status: 'draft',
       author: 'Sanwal Bajwa',
-      tags: ''
+      tags: '',
+      is_featured: false
     })
   }
 
@@ -333,7 +335,8 @@ export default function AdminBlogs() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/*  In the Add/Edit Form section, after the status dropdown, add: */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium mb-2">Category *</label>
                 <select
@@ -360,6 +363,22 @@ export default function AdminBlogs() {
                   <option value="draft">Draft</option>
                   <option value="published">Published</option>
                 </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Featured</label>
+                <div className="flex items-center h-10">
+                  <input
+                    type="checkbox"
+                    id="is_featured"
+                    name="is_featured"
+                    checked={formData.is_featured}
+                    onChange={handleInputChange}
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                  />
+                  <label htmlFor="is_featured" className="ml-2 text-sm text-gray-700">
+                    Show on homepage
+                  </label>
+                </div>
               </div>
             </div>
 
@@ -462,6 +481,11 @@ export default function AdminBlogs() {
                     <Badge variant={blog.status === 'published' ? 'default' : 'secondary'}>
                       {blog.status}
                     </Badge>
+                    {blog.is_featured && (
+                      <Badge className="bg-blue-600 text-white">
+                        Featured
+                      </Badge>
+                    )}
                     <span className="text-sm text-gray-500">
                       {new Date(blog.created_at).toLocaleDateString()}
                     </span>
