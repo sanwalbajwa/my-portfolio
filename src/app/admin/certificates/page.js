@@ -7,6 +7,7 @@ import { Badge } from '../../../components/ui/badge'
 import { Plus, Edit, Trash2, Save, X, Award } from 'lucide-react'
 import { supabase } from '../../../lib/supabase'
 import Image from 'next/image'
+import ImageUpload from '../../../components/ImageUpload'
 
 export default function AdminCertificates() {
   const [certificates, setCertificates] = useState([])
@@ -16,7 +17,8 @@ export default function AdminCertificates() {
   const [formData, setFormData] = useState({
     title: '',
     issuer: '',
-    image: ''
+    image: '',
+    description: ''
   })
 
   useEffect(() => {
@@ -42,17 +44,24 @@ export default function AdminCertificates() {
   }
 
   const handleAdd = async () => {
-    if (!formData.title || !formData.issuer) return
+    if (!formData.title || !formData.issuer) {
+      alert('Please fill in certificate title and issuer')
+      return
+    }
 
     const { error } = await supabase
       .from('certificates')
       .insert([formData])
 
-    if (!error) {
-      setFormData({ title: '', issuer: '', image: '' })
-      setShowAddForm(false)
-      fetchCertificates()
+    if (error) {
+      console.error('Error adding certificate:', error)
+      alert('Error adding certificate: ' + error.message)
+      return
     }
+
+    setFormData({ title: '', issuer: '', image: '', description: '' })
+    setShowAddForm(false)
+    fetchCertificates()
   }
 
   const handleEdit = (certificate) => {
@@ -68,7 +77,7 @@ export default function AdminCertificates() {
 
     if (!error) {
       setEditingId(null)
-      setFormData({ title: '', issuer: '', image: '' })
+      setFormData({ title: '', issuer: '', image: '', description: '' })
       fetchCertificates()
     }
   }
@@ -87,7 +96,7 @@ export default function AdminCertificates() {
   const handleCancel = () => {
     setEditingId(null)
     setShowAddForm(false)
-    setFormData({ title: '', issuer: '', image: '' })
+    setFormData({ title: '', issuer: '', image: '', description: '' })
   }
 
   if (loading) {
@@ -116,57 +125,68 @@ export default function AdminCertificates() {
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium mb-2">Certificate Title</label>
+                <label className="block text-sm font-medium mb-2">Certificate Title *</label>
                 <Input
                   name="title"
                   value={formData.title}
                   onChange={handleInputChange}
                   placeholder="e.g. React Developer Certification"
+                  required
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Issuing Organization</label>
+                <label className="block text-sm font-medium mb-2">Issuing Organization *</label>
                 <Input
                   name="issuer"
                   value={formData.issuer}
                   onChange={handleInputChange}
                   placeholder="e.g. Meta, Google, AWS"
+                  required
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">Certificate Image URL</label>
-              <Input
-                name="image"
-                value={formData.image}
+              <label className="block text-sm font-medium mb-2">Description</label>
+              <textarea
+                name="description"
+                value={formData.description}
                 onChange={handleInputChange}
-                placeholder="https://images.unsplash.com/photo-..."
+                placeholder="Brief description of what you learned or achieved..."
+                rows={3}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              {formData.image && (
-                <div className="mt-2">
-                  <p className="text-sm text-gray-600 mb-2">Preview:</p>
-                  <div className="relative w-48 h-32 rounded-lg overflow-hidden">
-                    <Image
-                      src={formData.image}
-                      alt="Certificate preview"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                </div>
-              )}
             </div>
+
+            <ImageUpload
+              onImageUpload={(imageUrl) => setFormData(prev => ({ ...prev, image: imageUrl }))}
+              currentImageUrl={formData.image}
+            />
+
+            {formData.image && (
+              <div className="mt-2">
+                <p className="text-sm text-gray-600 mb-2">Preview:</p>
+                <div className="relative w-48 h-32 rounded-lg overflow-hidden">
+                  <Image
+                    src={formData.image}
+                    alt="Certificate preview"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            )}
 
             <div className="flex gap-2">
               <Button 
                 onClick={editingId ? handleUpdate : handleAdd}
                 className="flex items-center gap-2"
+                type="button"
               >
                 <Save size={16} />
                 {editingId ? 'Update' : 'Create'} Certificate
               </Button>
-              <Button variant="outline" onClick={handleCancel}>
+              <Button variant="outline" onClick={handleCancel} type="button">
                 <X size={16} className="mr-2" />
                 Cancel
               </Button>
@@ -180,7 +200,6 @@ export default function AdminCertificates() {
         {certificates.map((certificate) => (
           <Card key={certificate.id} className="group hover:shadow-lg transition-shadow">
             <CardContent className="p-0">
-              {/* Certificate Image */}
               {certificate.image && (
                 <div className="relative h-40 w-full overflow-hidden rounded-t-lg">
                   <Image
@@ -192,7 +211,6 @@ export default function AdminCertificates() {
                 </div>
               )}
               
-              {/* Certificate Info */}
               <div className="p-4">
                 <div className="flex items-start gap-2 mb-3">
                   <Award className="text-yellow-600 mt-1 flex-shrink-0" size={18} />
@@ -210,7 +228,6 @@ export default function AdminCertificates() {
                   {certificate.issuer}
                 </Badge>
                 
-                {/* Action Buttons */}
                 <div className="flex gap-1">
                   <Button
                     variant="outline"
@@ -235,7 +252,7 @@ export default function AdminCertificates() {
         ))}
       </div>
 
-      {/* Table View for easier management */}
+      {/* Table View */}
       {certificates.length > 0 && (
         <Card className="mt-8">
           <CardHeader>
@@ -248,6 +265,7 @@ export default function AdminCertificates() {
                   <tr className="border-b">
                     <th className="text-left p-2">Title</th>
                     <th className="text-left p-2">Issuer</th>
+                    <th className="text-left p-2">Description</th>
                     <th className="text-left p-2">Date Added</th>
                     <th className="text-left p-2">Actions</th>
                   </tr>
@@ -257,6 +275,9 @@ export default function AdminCertificates() {
                     <tr key={certificate.id} className="border-b hover:bg-gray-50">
                       <td className="p-2 font-medium">{certificate.title}</td>
                       <td className="p-2">{certificate.issuer}</td>
+                      <td className="p-2 text-gray-600 max-w-xs truncate">
+                        {certificate.description || 'No description'}
+                      </td>
                       <td className="p-2 text-gray-500">
                         {new Date(certificate.created_at).toLocaleDateString()}
                       </td>

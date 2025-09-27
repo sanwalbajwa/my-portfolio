@@ -50,7 +50,7 @@ export default function HeroSection() {
               </Button>
               
               <Button variant="outline" size="lg" asChild className="group">
-                <Link href="/contact" className="flex items-center gap-2">
+                <Link href="#contact" className="flex items-center gap-2">
                   <Mail size={18} />
                   Contact Me
                   <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />

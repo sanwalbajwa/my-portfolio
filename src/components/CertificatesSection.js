@@ -56,7 +56,7 @@ export default function CertificatesSection() {
   }
 
   return (
-    <section className="py-20 bg-white">
+    <section id="certificates" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
@@ -134,60 +134,6 @@ export default function CertificatesSection() {
               </Card>
             </motion.div>
           ))}
-        </div>
-
-        {/* Stats Row */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          viewport={{ once: true }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12"
-        >
-          <div className="text-center">
-            <div className="text-3xl font-bold text-blue-600 mb-2">
-              {certificates.length}+
-            </div>
-            <div className="text-gray-600">Certificates</div>
-          </div>
-          
-          <div className="text-center">
-            <div className="text-3xl font-bold text-green-600 mb-2">
-              {new Set(certificates.map(cert => cert.issuer)).size}+
-            </div>
-            <div className="text-gray-600">Organizations</div>
-          </div>
-          
-          <div className="text-center">
-            <div className="text-3xl font-bold text-purple-600 mb-2">
-              {new Date().getFullYear() - Math.min(...certificates.map(cert => new Date(cert.created_at).getFullYear())) + 1}+
-            </div>
-            <div className="text-gray-600">Years Learning</div>
-          </div>
-          
-          <div className="text-center">
-            <div className="text-3xl font-bold text-orange-600 mb-2">
-              100%
-            </div>
-            <div className="text-gray-600">Commitment</div>
-          </div>
-        </motion.div>
-
-        {/* View All Button */}
-        <div className="text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            viewport={{ once: true }}
-          >
-            <Button asChild size="lg" className="group">
-              <Link href="/certificates" className="flex items-center gap-2">
-                View All Certificates
-                <ExternalLink size={16} className="group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </Button>
-          </motion.div>
         </div>
       </div>
     </section>
