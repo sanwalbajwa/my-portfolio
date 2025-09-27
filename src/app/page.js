@@ -1,6 +1,7 @@
 import HeroSection from '../components/HeroSection'
 import SkillsSection from '../components/SkillsSection'
 import FeaturedWork from '../components/FeaturedWork'
+import CertificatesSection from '../components/CertificatesSection'
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <HeroSection />
       <SkillsSection />
       <FeaturedWork />
+      <CertificatesSection />
     </div>
   )
 }
