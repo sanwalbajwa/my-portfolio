@@ -59,7 +59,7 @@ export default function TermsPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">Links</h2>
               <p className="text-gray-700 mb-4">
-                I have not reviewed all of the sites linked to my website and am not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by me of the site. Use of any such linked website is at the user's own risk.
+                I have not reviewed all of the sites linked to my website and am not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by me of the site. Use of any such linked website is at the user&apos;s own risk.
               </p>
             </section>
 
