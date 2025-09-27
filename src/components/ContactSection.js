@@ -86,10 +86,10 @@ export default function ContactSection() {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Let's Work Together
+              Let`&apos;s Work Together
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Ready to bring your ideas to life? I'd love to hear about your project 
+              Ready to bring your ideas to life? I`&apos;d love to hear about your project 
               and discuss how we can collaborate to create something amazing.
             </p>
           </motion.div>
@@ -107,7 +107,7 @@ export default function ContactSection() {
             <div>
               <h3 className="text-xl font-semibold mb-6 text-gray-900">Get In Touch</h3>
               <p className="text-gray-600 mb-6">
-                I'm always open to discussing new opportunities, creative projects, 
+                I`&apos;m always open to discussing new opportunities, creative projects, 
                 or just having a chat about technology and development.
               </p>
             </div>
@@ -152,7 +152,7 @@ export default function ContactSection() {
               <CardHeader>
                 <CardTitle className="text-2xl">Send Me a Message</CardTitle>
                 <p className="text-gray-600">
-                  Tell me about your project and let's discuss how we can work together.
+                  Tell me about your project and let`&apos;s discuss how we can work together.
                 </p>
               </CardHeader>
               
@@ -216,7 +216,7 @@ export default function ContactSection() {
                       className="flex items-center gap-2 text-green-600 bg-green-50 p-3 rounded-lg"
                     >
                       <CheckCircle size={18} />
-                      <span className="text-sm">Thanks for reaching out! I'll get back to you within 24 hours.</span>
+                      <span className="text-sm">Thanks for reaching out! I`&apos;ll get back to you within 24 hours.</span>
                     </motion.div>
                   )}
 
