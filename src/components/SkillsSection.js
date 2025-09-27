@@ -86,7 +86,7 @@ export default function SkillsSection() {
   // Icon Cloud Visualization
   const SkillsVisualization = () => {
     return (
-      <div className="relative w-full h-96 flex items-center justify-center overflow-hidden">
+      <div className="relative w-full h-100 flex items-center justify-center overflow-hidden">
         {/* Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-purple-50/50 rounded-2xl"></div>
         
