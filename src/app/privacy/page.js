@@ -18,7 +18,7 @@ export default function PrivacyPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">Introduction</h2>
               <p className="text-gray-700 leading-relaxed mb-4">
-                This Privacy Policy describes how Sanwal Bajwa ("I", "me", or "my") collects, uses, and protects your information when you visit my portfolio website.
+                This Privacy Policy describes how Sanwal Bajwa (&quot;I&quot;, &quot;me&quot;, or &quot;my&quot;) collects, uses, and protects your information when you visit my portfolio website.
               </p>
             </section>
 
@@ -107,7 +107,7 @@ export default function PrivacyPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">Changes to This Policy</h2>
               <p className="text-gray-700 mb-4">
-                I may update this Privacy Policy periodically. The updated version will be indicated by a revised "Last updated" date.
+                I may update this Privacy Policy periodically. The updated version will be indicated by a revised &quot;Last updated&quot; date.
               </p>
             </section>
 

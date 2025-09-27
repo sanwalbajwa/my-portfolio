@@ -154,7 +154,7 @@ export default function AdminCV() {
                 <div>
                   <p className="font-medium">{currentCV.original_name}</p>
                   <p className="text-sm text-gray-600">
-                    This CV will be downloaded when users click "Download CV" button
+                    This CV will be downloaded when users click &quot;Download CV&quot; button
                   </p>
                 </div>
               </div>
