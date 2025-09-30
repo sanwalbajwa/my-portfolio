@@ -6,6 +6,7 @@ export default async function Blog() {
   const { data: blogs, error } = await supabase
     .from('blogs')
     .select('*')
+    .eq('status', 'published')
     .order('created_at', { ascending: false })
 
   if (error) {
@@ -36,7 +37,7 @@ export default async function Blog() {
         ) : (
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg">No blog posts found.</p>
-            <p className="text-gray-400 mt-2">Blog posts will appear here once added to the database.</p>
+            <p className="text-gray-400 mt-2">Blog posts will appear here once published.</p>
           </div>
         )}
       </div>

@@ -9,9 +9,29 @@ import { motion } from 'framer-motion'
 export default function BlogCard({ blog }) {
   // Calculate reading time (rough estimate: 200 words per minute)
   const getReadingTime = (content) => {
-    const words = content.split(' ').length
+    const text = stripHtmlTags(content)
+    const words = text.split(/\s+/).length
     const readingTime = Math.ceil(words / 200)
     return readingTime
+  }
+
+  // Strip HTML tags and decode HTML entities
+  const stripHtmlTags = (html) => {
+    if (!html) return ''
+    
+    // Create a temporary div element to parse HTML
+    const tmp = document.createElement('DIV')
+    tmp.innerHTML = html
+    
+    // Get text content and remove extra whitespace
+    return tmp.textContent || tmp.innerText || ''
+  }
+
+  // Get clean excerpt
+  const getExcerpt = (content, length = 200) => {
+    const cleanText = stripHtmlTags(content)
+    if (cleanText.length <= length) return cleanText
+    return cleanText.substring(0, length).trim() + '...'
   }
 
   // Format date
@@ -46,7 +66,7 @@ export default function BlogCard({ blog }) {
                 </div>
                 <div className="flex items-center gap-1">
                   <Clock size={16} />
-                  <span>{getReadingTime(blog.content)} min read</span>
+                  <span>{blog.read_time || getReadingTime(blog.content)} min read</span>
                 </div>
               </div>
             </div>
@@ -56,13 +76,13 @@ export default function BlogCard({ blog }) {
         <CardContent>
           <div className="mb-6">
             <p className="text-gray-600 line-clamp-3 leading-relaxed">
-              {blog.content.substring(0, 200)}...
+              {blog.excerpt || getExcerpt(blog.content)}
             </p>
           </div>
 
           <div className="flex items-center justify-between">
             <Badge variant="secondary">
-              Article
+              {blog.category || 'Article'}
             </Badge>
             
             <Button variant="ghost" asChild className="group">

@@ -37,9 +37,28 @@ export default function FeaturedBlogSection() {
     }
   }
 
+  // Strip HTML tags and decode HTML entities
+  const stripHtmlTags = (html) => {
+    if (!html) return ''
+    if (typeof window === 'undefined') return html.replace(/<[^>]*>/g, '') // Server-side fallback
+    
+    const tmp = document.createElement('DIV')
+    tmp.innerHTML = html
+    return tmp.textContent || tmp.innerText || ''
+  }
+
+  // Get clean excerpt
+  const getExcerpt = (content, excerpt, length = 150) => {
+    if (excerpt) return excerpt
+    const cleanText = stripHtmlTags(content)
+    if (cleanText.length <= length) return cleanText
+    return cleanText.substring(0, length).trim() + '...'
+  }
+
   // Calculate reading time
   const getReadingTime = (content) => {
-    const words = content.replace(/<[^>]*>/g, '').split(' ').length
+    const cleanText = stripHtmlTags(content)
+    const words = cleanText.split(/\s+/).length
     return Math.ceil(words / 200)
   }
 
@@ -147,7 +166,7 @@ export default function FeaturedBlogSection() {
 
                 <CardContent className="pt-0">
                   <p className="text-gray-600 line-clamp-3 leading-relaxed mb-4">
-                    {blog.excerpt || blog.content.replace(/<[^>]*>/g, '').substring(0, 150) + '...'}
+                    {getExcerpt(blog.content, blog.excerpt)}
                   </p>
 
                   {/* Tags */}
