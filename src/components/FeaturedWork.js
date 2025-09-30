@@ -15,9 +15,13 @@ export default function FeaturedWork() {
   const [categories, setCategories] = useState([])
   const [activeCategory, setActiveCategory] = useState('All')
   const [filteredProjects, setFilteredProjects] = useState([])
+  const [displayedProjects, setDisplayedProjects] = useState([])
+  const [visibleCount, setVisibleCount] = useState(6)
   const [selectedProject, setSelectedProject] = useState(null)
   const [showDialog, setShowDialog] = useState(false)
   const [loading, setLoading] = useState(true)
+
+  const PROJECTS_PER_PAGE = 6
 
   useEffect(() => {
     fetchProjectsAndCategories()
@@ -25,16 +29,21 @@ export default function FeaturedWork() {
 
   useEffect(() => {
     filterProjects()
+    setVisibleCount(PROJECTS_PER_PAGE) // Reset visible count when category changes
   }, [projects, activeCategory])
+
+  useEffect(() => {
+    // Update displayed projects based on visible count
+    setDisplayedProjects(filteredProjects.slice(0, visibleCount))
+  }, [filteredProjects, visibleCount])
 
   const fetchProjectsAndCategories = async () => {
     try {
-      // Fetch projects
+      // Fetch ALL projects (removed limit)
       const { data: projectsData, error: projectsError } = await supabase
         .from('projects')
         .select('*')
         .order('created_at', { ascending: false })
-        .limit(6) // Limit to 6 featured projects
 
       // Fetch categories
       const { data: categoriesData, error: categoriesError } = await supabase
@@ -65,6 +74,10 @@ export default function FeaturedWork() {
     }
   }
 
+  const handleLoadMore = () => {
+    setVisibleCount(prevCount => prevCount + PROJECTS_PER_PAGE)
+  }
+
   const handleProjectClick = (project) => {
     setSelectedProject(project)
     setShowDialog(true)
@@ -85,6 +98,8 @@ export default function FeaturedWork() {
       color: "#FFFFFF" 
     }
   }
+
+  const hasMoreProjects = visibleCount < filteredProjects.length
 
   if (loading) {
     return (
@@ -149,7 +164,7 @@ export default function FeaturedWork() {
           layout
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12"
         >
-          {filteredProjects.map((project, index) => (
+          {displayedProjects.map((project, index) => (
             <motion.div
               key={project.id}
               layout
@@ -265,12 +280,29 @@ export default function FeaturedWork() {
           </motion.div>
         )}
 
+        {/* Load More Button */}
+        {hasMoreProjects && (
+          <div className="text-center mb-8">
+            <Button 
+              onClick={handleLoadMore}
+              size="lg"
+              variant="outline"
+              className="min-w-[200px]"
+            >
+              Load More Projects
+              <span className="ml-2 text-sm text-gray-500">
+                ({displayedProjects.length} of {filteredProjects.length})
+              </span>
+            </Button>
+          </div>
+        )}
+
         {/* View All Projects Button */}
-        {projects.length > 0 && (
+        {projects.length > 0 && !hasMoreProjects && (
           <div className="text-center">
             <Button asChild size="lg">
               <Link href="/portfolio">
-                View All Projects ({projects.length})
+                View All Projects
               </Link>
             </Button>
           </div>
