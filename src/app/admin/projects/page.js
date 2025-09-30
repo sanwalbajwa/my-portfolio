@@ -5,9 +5,10 @@ import { Button } from '../../../components/ui/button'
 import { Input } from '../../../components/ui/input'
 import { Textarea } from '../../../components/ui/textarea'
 import { Badge } from '../../../components/ui/badge'
-import { Plus, Edit, Trash2, Save, X, ExternalLink, Github, Lock } from 'lucide-react'
+import { Plus, Edit, Trash2, Save, X, ExternalLink, Github } from 'lucide-react'
 import { supabase } from '../../../lib/supabase'
 import Image from 'next/image'
+import ProjectImageUpload from '../../../components/ProjectImageUpload'
 
 export default function AdminProjects() {
   const [projects, setProjects] = useState([])
@@ -81,7 +82,10 @@ export default function AdminProjects() {
   }
 
   const handleAdd = async () => {
-    if (!formData.title || !formData.description) return
+    if (!formData.title || !formData.description) {
+      alert('Please fill in required fields')
+      return
+    }
 
     const projectData = {
       ...formData,
@@ -106,6 +110,8 @@ export default function AdminProjects() {
       })
       setShowAddForm(false)
       fetchProjects()
+    } else {
+      alert('Error adding project: ' + error.message)
     }
   }
 
@@ -144,6 +150,8 @@ export default function AdminProjects() {
         github_url: ''
       })
       fetchProjects()
+    } else {
+      alert('Error updating project: ' + error.message)
     }
   }
 
@@ -282,15 +290,11 @@ export default function AdminProjects() {
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-2">Project Image URL</label>
-              <Input
-                name="image"
-                value={formData.image}
-                onChange={handleInputChange}
-                placeholder="https://images.unsplash.com/photo-..."
-              />
-            </div>
+            {/* Image Upload Component */}
+            <ProjectImageUpload
+              onImageUpload={(imageUrl) => setFormData(prev => ({ ...prev, image: imageUrl }))}
+              currentImageUrl={formData.image}
+            />
 
             {/* Project Status & URLs */}
             <div className="border rounded-lg p-4 bg-gray-50">
