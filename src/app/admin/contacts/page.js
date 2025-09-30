@@ -230,7 +230,7 @@ export default function AdminContacts() {
               Contact form submissions will appear here when visitors send messages.
             </p>
             <Button variant="outline" asChild>
-              <a href="/contact" target="_blank" rel="noopener noreferrer">
+              <a href="/#contact" target="_blank" rel="noopener noreferrer">
                 View Contact Page
               </a>
             </Button>

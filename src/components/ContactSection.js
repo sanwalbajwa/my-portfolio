@@ -7,6 +7,7 @@ import { Button } from "./ui/button"
 import { Send, CheckCircle, AlertCircle, Mail, MapPin, Phone, Clock, Github, Linkedin } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { supabase } from '../lib/supabase'
+import emailjs from '@emailjs/browser'
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -16,6 +17,11 @@ export default function ContactSection() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState(null)
+
+  // EmailJS configuration - replace with your actual values
+  const EMAILJS_SERVICE_ID = 'service_f8bvgtt'
+  const EMAILJS_TEMPLATE_ID = 'template_x7hrmtd'
+  const EMAILJS_PUBLIC_KEY = 'Rs24dDx1MUiKQwDy4'
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -31,14 +37,30 @@ export default function ContactSection() {
     setSubmitStatus(null)
 
     try {
-      const { error } = await supabase
+      // Save to database
+      const { error: dbError } = await supabase
         .from('contacts')
         .insert([formData])
 
-      if (error) throw error
+      if (dbError) throw dbError
 
+      // Send email notification via EmailJS
+      const emailResult = await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+          to_email: 'sanwalbajwa@gmail.com'
+        },
+        EMAILJS_PUBLIC_KEY
+      )
+
+      console.log('Email sent successfully:', emailResult)
       setSubmitStatus('success')
       setFormData({ name: '', email: '', message: '' })
+
     } catch (error) {
       console.error('Error submitting form:', error)
       setSubmitStatus('error')
