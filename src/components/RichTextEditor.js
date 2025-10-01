@@ -16,6 +16,7 @@ import {
   Underline as UnderlineIcon, Upload, X
 } from 'lucide-react'
 import { supabase } from '../lib/supabase'
+import '../app/editor.css'
 
 export default function RichTextEditor({ content, onChange }) {
   const [imageUrl, setImageUrl] = useState('')
@@ -27,7 +28,19 @@ export default function RichTextEditor({ content, onChange }) {
 
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        heading: {
+          levels: [1, 2, 3],
+        },
+        bulletList: {
+          keepMarks: true,
+          keepAttributes: false,
+        },
+        orderedList: {
+          keepMarks: true,
+          keepAttributes: false,
+        },
+      }),
       Image.configure({
         HTMLAttributes: {
           class: 'max-w-full h-auto rounded-lg my-4',
@@ -48,11 +61,13 @@ export default function RichTextEditor({ content, onChange }) {
     content: content,
     immediatelyRender: false,
     onUpdate: ({ editor }) => {
-      onChange(editor.getHTML())
+      const html = editor.getHTML()
+      console.log('Editor content:', html) // Debug log
+      onChange(html)
     },
     editorProps: {
       attributes: {
-        class: 'prose prose-lg max-w-none focus:outline-none min-h-[400px] p-4 border rounded-lg',
+        class: 'prose prose-lg max-w-none focus:outline-none min-h-[400px] p-4 border rounded-lg prose-headings:font-bold prose-h1:text-3xl prose-h1:mb-4 prose-h1:mt-6 prose-h2:text-2xl prose-h2:mb-3 prose-h2:mt-5 prose-h3:text-xl prose-h3:mb-2 prose-h3:mt-4 prose-p:text-base prose-p:mb-4 prose-p:leading-7 prose-ul:list-disc prose-ul:pl-6 prose-ul:my-4 prose-ul:space-y-2 prose-ol:list-decimal prose-ol:pl-6 prose-ol:my-4 prose-ol:space-y-2 prose-li:text-base prose-li:leading-7 prose-strong:font-semibold prose-strong:text-gray-900 prose-em:italic prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:pl-4 prose-blockquote:italic prose-a:text-blue-600 prose-a:underline',
       },
     },
   })
