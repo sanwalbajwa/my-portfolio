@@ -56,7 +56,7 @@ export const metadata = {
     description: 'Full Stack Developer with 2+ years of experience in WordPress, Next.js, React, and modern web technologies.',
     images: [
       {
-        url: '/og-image.jpg', // Add your OG image to public folder
+        url: 'https://sanwalbajwa.com/og-image.jpg', // Add your OG image to public folder
         width: 1200,
         height: 630,
         alt: 'Sanwal Bajwa - Full Stack Developer',
@@ -70,7 +70,7 @@ export const metadata = {
     title: 'Sanwal Bajwa | Full Stack Developer',
     description: 'Full Stack Developer specializing in WordPress, Next.js, and modern web technologies.',
     creator: '@yourtwitterhandle', // Replace with your Twitter handle
-    images: ['/og-image.jpg'],
+    images: ['https://sanwalbajwa.com/og-image.jpg'],
   },
 
   // Verification (Add these from Google Search Console, Bing, etc.)
