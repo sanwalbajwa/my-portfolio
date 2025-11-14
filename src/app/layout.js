@@ -72,7 +72,7 @@ export const metadata = {
     creator: '@yourtwitterhandle', // Replace with your Twitter handle
     images: ['https://sanwalbajwa.com/og-image.jpg'],
   }, 
- 
+
   // Verification (Add these from Google Search Console, Bing, etc.)
   verification: {
     google: 'WJ_S1a6lVlvcr2LVwveCUgnhsr5RhnQlQ7mSeVQUcUY',
