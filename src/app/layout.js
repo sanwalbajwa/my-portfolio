@@ -71,7 +71,7 @@ export const metadata = {
     description: 'Full Stack Developer specializing in WordPress, Next.js, and modern web technologies.',
     creator: '@yourtwitterhandle', // Replace with your Twitter handle
     images: ['https://sanwalbajwa.com/og-image.jpg'],
-  },
+  }, 
 
   // Verification (Add these from Google Search Console, Bing, etc.)
   verification: {
