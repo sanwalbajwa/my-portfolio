@@ -64,12 +64,12 @@ export default function HeroSection() {
               </h1>
               
               <h2 className="text-xl md:text-2xl text-gray-600 mb-8">
-                Software Dev @ CodesFix | Pursuing Computer Science
+                Software Dev @ CodesFix
               </h2>
               
               <p className="text-lg text-gray-700 mb-10 leading-relaxed">
-                Full Stack Developer with over 2+ years of hands-on experience, currently working as a WordPress Developer at CodesFix. 
-                I specialize in WordPress Development and have growing expertise in Next.js and JavaScript technologies. Passionate about clean code, performance optimization, and building scalable, user-friendly applications.
+                Software Developer with over 2+ years of hands-on experience. 
+                I am working in Javascript Technologies mostly in NodeJS, NextJS and PHP & WordPress Development
               </p>
             </motion.div>
 
