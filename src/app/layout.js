@@ -11,7 +11,7 @@ const poppins = Poppins({
 })
 
 export const metadata = {
-  metadataBase: new URL('https://sanwalbajwa.com/'), // Replace with your actual domain
+  metadataBase: new URL('https://www.sanwalbajwa.com/'),
   
   title: {
     default: 'Sanwal Bajwa | Full Stack Developer',
