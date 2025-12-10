@@ -9,6 +9,7 @@ import { Plus, Edit, Trash2, Save, X, Eye, Upload } from 'lucide-react'
 import { supabase } from '../../../lib/supabase'
 import RichTextEditor from '../../../components/RichTextEditor'
 import WordImporter from '../../../components/WordImporter'
+import BlogImageUpload from '../../../components/BlogImageUpload'
 
 export default function AdminBlogs() {
   const [blogs, setBlogs] = useState([])
@@ -73,10 +74,10 @@ export default function AdminBlogs() {
   }
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
+    const { name, value, type, checked } = e.target
     setFormData(prev => ({
       ...prev,
-      [name]: value,
+      [name]: type === 'checkbox' ? checked : value,
       ...(name === 'title' && { slug: generateSlug(value) })
     }))
   }
@@ -152,7 +153,8 @@ export default function AdminBlogs() {
         meta_keywords: '',
         status: 'draft',
         author: 'Sanwal Bajwa',
-        tags: ''
+        tags: '',
+        is_featured: false
       })
       setShowAddForm(false)
       fetchBlogs()
@@ -194,7 +196,8 @@ export default function AdminBlogs() {
         meta_keywords: '',
         status: 'draft',
         author: 'Sanwal Bajwa',
-        tags: ''
+        tags: '',
+        is_featured: false
       })
       fetchBlogs()
     }
@@ -439,15 +442,11 @@ export default function AdminBlogs() {
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium mb-2">Featured Image URL</label>
-                  <Input
-                    name="featured_image"
-                    value={formData.featured_image}
-                    onChange={handleInputChange}
-                    placeholder="https://images.example.com/featured-image.jpg"
-                  />
-                </div>
+                {/* Blog Image Upload Component */}
+                <BlogImageUpload
+                  onImageUpload={(imageUrl) => setFormData(prev => ({ ...prev, featured_image: imageUrl }))}
+                  currentImageUrl={formData.featured_image}
+                />
               </div>
             </div>
 
