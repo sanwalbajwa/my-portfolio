@@ -7,23 +7,15 @@ import Link from 'next/link'
 import Image from 'next/image'
 import '../../../app/blog-content.css'
 
-export const dynamic = 'force-dynamic'
-// Generate static params for all blog posts
-export async function generateStaticParams() {
-  const { data: blogs } = await supabase
-    .from('blogs')
-    .select('slug')
-    .eq('status', 'published')
-  
-  return blogs || []
-}
-
 // Generate metadata for SEO
 export async function generateMetadata({ params }) {
+  // Await params in Next.js 15+
+  const { slug } = await params
+  
   const { data: blog } = await supabase
     .from('blogs')
     .select('*')
-    .eq('slug', params.slug)
+    .eq('slug', slug)
     .eq('status', 'published')
     .single()
 
@@ -54,7 +46,7 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title: blog.title,
       description: description,
-      url: `https://yourdomain.com/blog/${blog.slug}`,
+      url: `https://www.sanwalbajwa.com/blog/${blog.slug}`,
       siteName: 'Sanwal Bajwa',
       images: blog.featured_image ? [
         {
@@ -83,7 +75,7 @@ export async function generateMetadata({ params }) {
 
     // Additional metadata
     alternates: {
-      canonical: `https://yourdomain.com/blog/${blog.slug}`,
+      canonical: `https://www.sanwalbajwa.com/blog/${blog.slug}`,
     },
 
     robots: {
@@ -101,10 +93,13 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function BlogPost({ params }) {
+  // Await params in Next.js 15+
+  const { slug } = await params
+  
   const { data: blog, error } = await supabase
     .from('blogs')
     .select('*')
-    .eq('slug', params.slug)
+    .eq('slug', slug)
     .eq('status', 'published')
     .single()
 
@@ -127,22 +122,22 @@ export default async function BlogPost({ params }) {
     '@type': 'BlogPosting',
     headline: blog.title,
     description: blog.meta_description || blog.excerpt,
-    image: blog.featured_image || 'https://yourdomain.com/default-blog-image.jpg',
+    image: blog.featured_image || 'https://www.sanwalbajwa.com/default-blog-image.jpg',
     datePublished: blog.created_at,
     dateModified: blog.updated_at || blog.created_at,
     author: {
       '@type': 'Person',
       name: blog.author || 'Sanwal Bajwa',
-      url: 'https://yourdomain.com',
+      url: 'https://www.sanwalbajwa.com',
     },
     publisher: {
       '@type': 'Person',
       name: 'Sanwal Bajwa',
-      url: 'https://yourdomain.com',
+      url: 'https://www.sanwalbajwa.com',
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://yourdomain.com/blog/${blog.slug}`,
+      '@id': `https://www.sanwalbajwa.com/blog/${blog.slug}`,
     },
     keywords: Array.isArray(blog.meta_keywords) ? blog.meta_keywords.join(', ') : blog.meta_keywords,
     articleSection: blog.category,
