@@ -7,6 +7,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import '../../../app/blog-content.css'
 
+export const dynamic = 'force-dynamic'
 // Generate static params for all blog posts
 export async function generateStaticParams() {
   const { data: blogs } = await supabase
