@@ -46,7 +46,7 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title: blog.title,
       description: description,
-      url: `https://www.sanwalbajwa.com/blog/${blog.slug}`,
+      url: `https://sanwalbajwa.com/blog/${blog.slug}`,
       siteName: 'Sanwal Bajwa',
       images: blog.featured_image ? [
         {
@@ -75,7 +75,7 @@ export async function generateMetadata({ params }) {
 
     // Additional metadata
     alternates: {
-      canonical: `https://www.sanwalbajwa.com/blog/${blog.slug}`,
+      canonical: `https://sanwalbajwa.com/blog/${blog.slug}`,
     },
 
     robots: {
