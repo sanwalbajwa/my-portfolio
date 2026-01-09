@@ -34,7 +34,7 @@ export async function generateMetadata({ params }) {
   const keywords = Array.isArray(blog.meta_keywords) ? blog.meta_keywords.join(', ') : blog.meta_keywords || ''
 
   return {
-    title: `${blog.title}`,
+    title: blog.title,
     description: description,
     keywords: keywords,
     authors: [{ name: blog.author }],
