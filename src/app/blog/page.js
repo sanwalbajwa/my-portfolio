@@ -1,6 +1,19 @@
 import { supabase } from '../../lib/supabase'
 import BlogCard from '../../components/BlogCard'
 
+export const metadata = {
+  title: 'Blog | Web Development & Tech Insights',
+  description: 'Thoughts on web development, technology trends, and lessons learned from building digital experiences.',
+  alternates: {
+    canonical: 'https://sanwalbajwa.com/blog',
+  },
+  openGraph: {
+    title: 'Blog | Sanwal Bajwa',
+    description: 'Thoughts on web development, technology trends, and lessons learned from building digital experiences.',
+    url: 'https://sanwalbajwa.com/blog',
+  },
+}
+
 export default async function Blog() {
   // Fetch blog posts from Supabase
   const { data: blogs, error } = await supabase
