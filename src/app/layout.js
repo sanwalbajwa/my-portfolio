@@ -18,7 +18,7 @@ export const metadata = {
     template: '%s | Sanwal Bajwa'
   },
   
-  description: 'Muhammad Yar Sanwal, professionally known as Sanwal Bajwa. Full Stack Developer with 2+ years of experience in WordPress, Next.js, React, and modern web technologies.',
+  description: 'Muhammad Yar Sanwal, professionally known as Sanwal Bajwa. Software Engineer with 2+ years of experience in Fuull Stack Development & CMS.',
   
   keywords: [
     'Muhammad Yar Sanwal',
