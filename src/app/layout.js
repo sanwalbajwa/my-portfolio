@@ -101,9 +101,10 @@ export const metadata = {
   },
 
   // Alternate languages (if you have multi-language support)
-  alternates: {
-    canonical: 'https://sanwalbajwa.com',
-  },
+  // Note: Individual pages should set their own canonical URLs
+  // alternates: {
+  //   canonical: 'https://sanwalbajwa.com',
+  // },
 }
 
 export default function RootLayout({ children }) {

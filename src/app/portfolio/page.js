@@ -1,6 +1,19 @@
 import { supabase } from '../../lib/supabase'
 import ProjectCard from '../../components/ProjectCard'
 
+export const metadata = {
+  title: 'Portfolio | Projects & Work',
+  description: 'Explore my portfolio of web development projects, including WordPress sites, Next.js applications, and full-stack solutions.',
+  alternates: {
+    canonical: 'https://sanwalbajwa.com/portfolio',
+  },
+  openGraph: {
+    title: 'Portfolio | Sanwal Bajwa',
+    description: 'Explore my portfolio of web development projects, including WordPress sites, Next.js applications, and full-stack solutions.',
+    url: 'https://sanwalbajwa.com/portfolio',
+  },
+}
+
 export default async function Portfolio() {
   // Fetch projects from Supabase
   const { data: projects, error } = await supabase
