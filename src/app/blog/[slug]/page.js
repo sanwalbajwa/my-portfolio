@@ -34,13 +34,13 @@ export async function generateMetadata({ params }) {
   const keywords = Array.isArray(blog.meta_keywords) ? blog.meta_keywords.join(', ') : blog.meta_keywords || ''
 
   return {
-    title: `${blog.title} | Sanwal Bajwa`,
+    title: `${blog.title}`,
     description: description,
     keywords: keywords,
-    authors: [{ name: blog.author || 'Sanwal Bajwa' }],
-    creator: blog.author || 'Sanwal Bajwa',
+    authors: [{ name: blog.author }],
+    creator: blog.author,
     publisher: 'Sanwal Bajwa',
-    category: blog.category || 'Technology',
+    category: blog.category,
     
     // Open Graph for social media
     openGraph: {
