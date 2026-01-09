@@ -14,7 +14,7 @@ export const metadata = {
   metadataBase: new URL('https://www.sanwalbajwa.com/'),
   
   title: {
-    default: 'Sanwal Bajwa | Full Stack Developer',
+    default: 'Muhammad Yar Sanwal | Software Engineer & Full Stack Developer',
     template: '%s | Sanwal Bajwa'
   },
   
