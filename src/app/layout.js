@@ -101,12 +101,9 @@ export const metadata = {
   },
 
   // Alternate languages (if you have multi-language support)
-  // alternates: {
-  //   canonical: 'https://yourdomain.com',
-  //   languages: {
-  //     'en-US': 'https://yourdomain.com',
-  //   },
-  // },
+  alternates: {
+    canonical: 'https://sanwalbajwa.com',
+  },
 }
 
 export default function RootLayout({ children }) {
