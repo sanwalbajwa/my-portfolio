@@ -1,7 +1,7 @@
 import { supabase } from '../lib/supabase'
 
 export default async function sitemap() {
-  const baseUrl = 'https://sanwalbajwa.com/' // Replace with your actual domain
+  const baseUrl = 'https://sanwalbajwa.com' // Replace with your actual domain
 
   // Fetch all published blogs
   const { data: blogs } = await supabase
@@ -25,25 +25,25 @@ export default async function sitemap() {
       priority: 1.0,
     },
     {
-      url: `${baseUrl}portfolio`,
+      url: `${baseUrl}/portfolio`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
-      url: `${baseUrl}blog`,
+      url: `${baseUrl}/blog`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.9,
     },
     {
-      url: `${baseUrl}privacy`,
+      url: `${baseUrl}/privacy`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.3,
     },
     {
-      url: `${baseUrl}terms`,
+      url: `${baseUrl}/terms`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.3,

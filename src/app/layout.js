@@ -11,7 +11,7 @@ const poppins = Poppins({
 })
 
 export const metadata = {
-  metadataBase: new URL('https://www.sanwalbajwa.com/'),
+  metadataBase: new URL('https://sanwalbajwa.com'),
   
   title: {
     default: 'Muhammad Yar Sanwal | Software Engineer & Full Stack Developer',

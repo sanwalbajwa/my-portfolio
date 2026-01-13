@@ -1,5 +1,5 @@
 export default function robots() {
-  const baseUrl = 'https://sanwalbajwa.com/' // Replace with your actual domain
+  const baseUrl = 'https://sanwalbajwa.com' // Replace with your actual domain
 
   return {
     rules: [
