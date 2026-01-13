@@ -1,6 +1,9 @@
 export const metadata = {
   title: 'Privacy Policy | Sanwal Bajwa',
   description: 'Privacy policy for Sanwal Bajwa portfolio website',
+  alternates: {
+    canonical: 'https://sanwalbajwa.com/privacy',
+  },
 }
 
 export default function PrivacyPage() {

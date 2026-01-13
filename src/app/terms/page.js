@@ -1,6 +1,9 @@
 export const metadata = {
   title: 'Terms of Service | Sanwal Bajwa',
   description: 'Terms of service for Sanwal Bajwa portfolio website',
+  alternates: {
+    canonical: 'https://sanwalbajwa.com/terms',
+  },
 }
 
 export default function TermsPage() {

@@ -36,7 +36,7 @@ export const metadata = {
     'Tech Blog'
   ],
   
-  authors: [{ name: 'Sanwal Bajwa', url: 'https://sanwalbajwa.com/' }],
+  authors: [{ name: 'Sanwal Bajwa', url: 'https://sanwalbajwa.com' }],
   creator: 'Sanwal Bajwa',
   publisher: 'Sanwal Bajwa',
   
@@ -50,7 +50,7 @@ export const metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://sanwalbajwa.com/',
+    url: 'https://sanwalbajwa.com',
     siteName: 'Sanwal Bajwa',
     title: 'Sanwal Bajwa | Full Stack Developer & WordPress Expert',
     description: 'Full Stack Developer with 2+ years of experience in WordPress, Next.js, React, and modern web technologies.',
