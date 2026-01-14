@@ -1,5 +1,9 @@
 import { supabase } from '../lib/supabase'
 
+// Force dynamic rendering of sitemap
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function sitemap() {
   const baseUrl = 'https://sanwalbajwa.com' // Replace with your actual domain
 
