@@ -18,25 +18,22 @@ export default function SkillsSection() {
     'Frontend': [
       // { name: 'HTML', level: 95, icon: Globe },
       { name: 'Tailwind', level: 90, icon: Palette },
-      { name: 'JavaScript', level: 88, icon: Zap },
-      { name: 'jQuery', level: 85, icon: Code2 },
+      { name: 'JavaScript & jQuery', level: 88, icon: Code2 },
       { name: 'ReactJS', level: 90, icon: Layers },
       { name: 'NextJS', level: 87, icon: Monitor }
     ],
     'Backend': [
       { name: 'PHP', level: 85, icon: Server },
-      { name: 'Python', level: 80, icon: Terminal },
-      { name: 'Django', level: 75, icon: Settings },
+      { name: 'Python & Django', level: 80, icon: Terminal },
       { name: 'Node.js', level: 78, icon: Cpu }
     ],
     'Database': [
-      { name: 'SQL', level: 85, icon: Database },
+      { name: 'MYSQL', level: 85, icon: Database },
       { name: 'MongoDB', level: 80, icon: Database },
       { name: 'Supabase', level: 88, icon: Zap }
     ],
     'CMS': [
       { name: 'WordPress Development', level: 92, icon: FileCode },
-      { name: 'Plugin Development', level: 88, icon: Puzzle },
       { name: 'Shopify', level: 82, icon: ShoppingCart }
     ],
     'Languages': [
