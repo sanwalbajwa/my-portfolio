@@ -68,7 +68,7 @@ export default function HeroSection() {
               </h2>
               
               <p className="text-lg text-gray-700 mb-10 leading-relaxed">
-                Full-Stack Developer with 2+ years of hands-on experience, currently working as a Software Developer at CodesFix, where I build scalable, performance-driven web solutions.
+                Full-Stack Developer with 3 years of hands-on experience, currently working as a Software Developer at CodesFix, where I build scalable, performance-driven web solutions.
                 My core expertise lies in PHP, WordPress (custom plugins, themes, WooCommerce) and Next.js, with strong working knowledge of Node.js and modern JavaScript ecosystems.
                 <br></br><br></br>
                 On the mobile side, I’m expanding into React Native, backed by prior experience with Flutter & Dart, giving me a solid cross-platform development mindset.
