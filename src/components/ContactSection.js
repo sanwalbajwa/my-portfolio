@@ -85,7 +85,7 @@ export default function ContactSection() {
     {
       icon: MapPin,
       title: "Location",
-      detail: "Bahawalpur, Punjab, Pakistan",
+      detail: "Lahore, Punjab, Pakistan",
       link: null
     },
     {
