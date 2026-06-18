@@ -268,8 +268,8 @@ export default function HeroSection() {
                       <span className="text-white text-xs font-bold">JS</span>
                     </div>
                     <div>
-                      <div className="text-xs font-medium text-gray-700">Next.js</div>
-                      <div className="text-xs text-gray-500">Growing</div>
+                      <div className="text-xs font-medium text-gray-700">Next.js & React</div>
+                      <div className="text-xs text-gray-500">Expert</div>
                     </div>
                   </div>
                 </motion.div>
