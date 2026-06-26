@@ -73,13 +73,13 @@ export default function FeaturedBlogSection() {
 
   if (loading) {
     return (
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-[#f7f2e8]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#17262d] mb-4">
               Featured Articles
             </h2>
-            <p className="text-lg text-gray-600">Loading featured content...</p>
+            <p className="text-lg text-[#5f665f]">Loading featured content...</p>
           </div>
         </div>
       </section>
@@ -92,7 +92,7 @@ export default function FeaturedBlogSection() {
   }
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-20 bg-[#f7f2e8]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
@@ -102,10 +102,10 @@ export default function FeaturedBlogSection() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#17262d] mb-4">
               Featured Articles
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-[#5f665f] max-w-2xl mx-auto">
               Handpicked articles covering web development insights, tutorials, 
               and industry best practices.
             </p>
@@ -135,7 +135,7 @@ export default function FeaturedBlogSection() {
                     />
                     {/* Featured Badge */}
                     <div className="absolute top-4 left-4">
-                      <Badge className="bg-blue-600 text-white">
+                      <Badge className="bg-[#2b766f] text-white">
                         Featured
                       </Badge>
                     </div>
@@ -157,7 +157,7 @@ export default function FeaturedBlogSection() {
                     </div>
                   </div>
                   
-                  <CardTitle className="text-xl leading-tight group-hover:text-blue-600 transition-colors">
+                  <CardTitle className="text-xl leading-tight group-hover:text-[#2b766f] transition-colors">
                     <Link href={`/blog/${blog.slug}`}>
                       {blog.title}
                     </Link>

@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 import { Input } from "./ui/input"
 import { Textarea } from "./ui/textarea"
 import { Button } from "./ui/button"
-import { Send, CheckCircle, AlertCircle, Mail, MapPin, Phone, Clock, Github, Linkedin } from 'lucide-react'
+import { Send, CheckCircle, AlertCircle, Mail, MapPin, Clock } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { supabase } from '../lib/supabase'
 import emailjs from '@emailjs/browser'
@@ -77,12 +77,6 @@ export default function ContactSection() {
       link: "mailto:sanwalbajwa@gmail.com"
     },
     {
-      icon: Phone,
-      title: "Phone",
-      detail: "+92 (370) 8280266",
-      link: "tel:+923708280266"
-    },
-    {
       icon: MapPin,
       title: "Location",
       detail: "Lahore, Punjab, Pakistan",
@@ -97,27 +91,27 @@ export default function ContactSection() {
   ]
 
   return (
-    <section id="contact" className="py-20 bg-white">
+    <section id="contact" className="py-16 md:py-20 bg-[#fbf8f1]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12 md:mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#17262d] mb-4">
               Let&apos;s Work Together
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-[#5f665f] max-w-2xl mx-auto">
               Ready to bring your ideas to life? I&apos;d love to hear about your project 
               and discuss how we can collaborate to create something amazing.
             </p>
           </motion.div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-8">
           {/* Contact Info Cards */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -127,40 +121,42 @@ export default function ContactSection() {
             className="space-y-6"
           >
             <div>
-              <h3 className="text-xl font-semibold mb-6 text-gray-900">Get In Touch</h3>
-              <p className="text-gray-600 mb-6">
+              <h3 className="text-xl font-semibold mb-6 text-[#17262d]">Get In Touch</h3>
+              <p className="text-[#5f665f] mb-6">
                 I&apos;m always open to discussing new opportunities, creative projects, 
                 or just having a chat about technology and development.
               </p>
             </div>
 
-            {contactDetails.map((item, index) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                  <item.icon className="text-blue-600" size={20} />
-                </div>
-                <div className="flex-1">
-                  <h4 className="font-medium text-gray-900 mb-1">{item.title}</h4>
-                  {item.link ? (
-                    <a 
-                      href={item.link}
-                      className="text-gray-600 hover:text-blue-600 transition-colors"
-                    >
-                      {item.detail}
-                    </a>
-                  ) : (
-                    <p className="text-gray-600">{item.detail}</p>
-                  )}
-                </div>
-              </motion.div>
-            ))}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-1 gap-3">
+              {contactDetails.map((item, index) => (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="flex items-start gap-4 p-4 rounded-lg hover:bg-[#efe6d7] transition-colors"
+                >
+                  <div className="flex-shrink-0 w-12 h-12 bg-[#e0eee9] rounded-xl flex items-center justify-center">
+                    <item.icon className="text-[#2b766f]" size={20} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-medium text-[#17262d] mb-1">{item.title}</h4>
+                    {item.link ? (
+                      <a 
+                        href={item.link}
+                        className="text-[#5f665f] hover:text-[#2b766f] transition-colors break-words"
+                      >
+                        {item.detail}
+                      </a>
+                    ) : (
+                      <p className="text-[#5f665f]">{item.detail}</p>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
 
           {/* Contact Form */}
@@ -170,10 +166,10 @@ export default function ContactSection() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <Card className="shadow-lg">
+            <Card className="shadow-lg border-[#e3d9c8]">
               <CardHeader>
-                <CardTitle className="text-2xl">Send Me a Message</CardTitle>
-                <p className="text-gray-600">
+                <CardTitle className="text-xl md:text-2xl">Send Me a Message</CardTitle>
+                <p className="text-[#5f665f]">
                   Tell me about your project and let&apos;s discuss how we can work together.
                 </p>
               </CardHeader>
@@ -238,7 +234,7 @@ export default function ContactSection() {
                       className="flex items-center gap-2 text-green-600 bg-green-50 p-3 rounded-lg"
                     >
                       <CheckCircle size={18} />
-                      <span className="text-sm">Thanks for reaching out! I`&apos;ll get back to you within 24 hours.</span>
+                      <span className="text-sm">Thanks for reaching out! I&apos;ll get back to you within 24 hours.</span>
                     </motion.div>
                   )}
 

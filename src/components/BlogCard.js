@@ -53,7 +53,7 @@ export default function BlogCard({ blog }) {
         <CardHeader>
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1">
-              <CardTitle className="text-2xl mb-3 hover:text-blue-600 transition-colors">
+              <CardTitle className="text-2xl mb-3 hover:text-[#2b766f] transition-colors">
                 <Link href={`/blog/${blog.slug}`}>
                   {blog.title}
                 </Link>

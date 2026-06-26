@@ -29,7 +29,7 @@ export default function CertificateCard({ certificate }) {
 
         <CardHeader className="pb-3">
           <div className="flex items-start gap-2">
-            <Award className="text-yellow-600 mt-1" size={20} />
+            <Award className="text-[#d9952f] mt-1" size={20} />
             <div className="flex-1">
               <CardTitle className="text-lg leading-tight">
                 {certificate.title}

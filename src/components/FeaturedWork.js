@@ -91,10 +91,10 @@ export default function FeaturedWork() {
   const tabVariants = {
     inactive: { 
       backgroundColor: "transparent", 
-      color: "#6B7280" 
+      color: "#5f665f" 
     },
     active: { 
-      backgroundColor: "#3B82F6", 
+      backgroundColor: "#2b766f", 
       color: "#FFFFFF" 
     }
   }
@@ -103,13 +103,13 @@ export default function FeaturedWork() {
 
   if (loading) {
     return (
-      <section className="py-20 bg-gray-50">
+      <section className="py-16 md:py-20 bg-[#f7f2e8]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#17262d] mb-4">
               Featured Work
             </h2>
-            <p className="text-lg text-gray-600">Loading projects...</p>
+            <p className="text-base md:text-lg text-[#5f665f]">Loading projects...</p>
           </div>
         </div>
       </section>
@@ -117,24 +117,24 @@ export default function FeaturedWork() {
   }
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-16 md:py-20 bg-[#f7f2e8]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <div className="text-center mb-12 md:mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#17262d] mb-4">
             Featured Work
           </h2>
-          <p className="text-lg text-gray-600">
+          <p className="text-base md:text-lg text-[#5f665f]">
             Explore my projects across different technologies
           </p>
         </div>
 
         {/* Category Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
+        <div className="flex flex-wrap justify-center gap-2 mb-10 md:mb-12">
           <motion.button
             variants={tabVariants}
             animate={activeCategory === 'All' ? 'active' : 'inactive'}
             onClick={() => setActiveCategory('All')}
-            className="px-6 py-3 rounded-full border-2 border-blue-600 font-medium transition-all duration-200 hover:border-blue-700"
+            className="px-4 py-2 sm:px-6 sm:py-3 rounded-full border-2 border-[#2b766f] text-sm sm:text-base font-medium transition-all duration-200 hover:border-[#17313b]"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -149,7 +149,7 @@ export default function FeaturedWork() {
                 variants={tabVariants}
                 animate={activeCategory === category.name ? 'active' : 'inactive'}
                 onClick={() => setActiveCategory(category.name)}
-                className="px-6 py-3 rounded-full border-2 border-blue-600 font-medium transition-all duration-200 hover:border-blue-700"
+                className="px-4 py-2 sm:px-6 sm:py-3 rounded-full border-2 border-[#2b766f] text-sm sm:text-base font-medium transition-all duration-200 hover:border-[#17313b]"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -162,7 +162,7 @@ export default function FeaturedWork() {
         {/* Projects Grid */}
         <motion.div 
           layout
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12"
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12"
         >
           {displayedProjects.map((project, index) => (
             <motion.div

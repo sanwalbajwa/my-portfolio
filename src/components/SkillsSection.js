@@ -83,9 +83,9 @@ export default function SkillsSection() {
   // Icon Cloud Visualization
   const SkillsVisualization = () => {
     return (
-      <div className="relative w-full h-100 flex items-center justify-center overflow-hidden">
+      <div className="relative w-full h-[320px] sm:h-[380px] lg:h-[420px] flex items-center justify-center overflow-hidden">
         {/* Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-purple-50/50 rounded-2xl"></div>
+        <div className="absolute inset-0 bg-[#efe6d7]/70 rounded-2xl border border-[#d8cdb9]"></div>
         
         {/* Icon Cloud */}
         <motion.div
@@ -116,8 +116,8 @@ export default function SkillsSection() {
           className="absolute top-8 left-8 bg-white/90 backdrop-blur-sm px-3 py-2 rounded-lg shadow-md border border-gray-200"
         >
           <div className="text-center">
-            <div className="text-lg font-bold text-blue-600">{iconSlugs.length}+</div>
-            <div className="text-xs text-gray-600">Technologies</div>
+            <div className="text-lg font-bold text-[#2b766f]">{iconSlugs.length}+</div>
+            <div className="text-xs text-[#6c675d]">Technologies</div>
           </div>
         </motion.div>
 
@@ -128,8 +128,8 @@ export default function SkillsSection() {
           className="absolute bottom-8 right-8 bg-white/90 backdrop-blur-sm px-3 py-2 rounded-lg shadow-md border border-gray-200"
         >
           <div className="text-center">
-            <div className="text-lg font-bold text-purple-600">2+</div>
-            <div className="text-xs text-gray-600">Years Exp</div>
+            <div className="text-lg font-bold text-[#d9952f]">2+</div>
+            <div className="text-xs text-[#6c675d]">Years Exp</div>
           </div>
         </motion.div>
       </div>
@@ -138,13 +138,13 @@ export default function SkillsSection() {
 
   if (!mounted) {
     return (
-      <section className="py-20 bg-white">
+      <section className="py-16 md:py-20 bg-[#f7f2e8]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Skills & Technologies
             </h2>
-            <p className="text-lg text-gray-600">Loading skills...</p>
+            <p className="text-base md:text-lg text-[#5f665f]">Loading skills...</p>
           </div>
         </div>
       </section>
@@ -152,26 +152,26 @@ export default function SkillsSection() {
   }
 
   return (
-    <section className="py-20 bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <section className="py-16 md:py-20 bg-[#fbf8f1]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12 md:mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#17262d] mb-4">
               Skills & Technologies
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-[#5f665f] max-w-2xl mx-auto">
               A comprehensive overview of my technical expertise across various domains
             </p>
           </motion.div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
           {/* Left Side - Interactive Icon Cloud */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -197,10 +197,10 @@ export default function SkillsSection() {
                 <motion.button
                   key={category}
                   onClick={() => setActiveCategory(category)}
-                  className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                  className={`px-3 py-2 sm:px-4 rounded-lg text-sm sm:text-base font-medium transition-all duration-200 ${
                     activeCategory === category
-                      ? 'bg-blue-600 text-white shadow-lg'
-                      : 'bg-white text-gray-600 hover:bg-blue-50 border border-gray-200'
+                      ? 'bg-[#2b766f] text-white shadow-lg'
+                      : 'bg-white text-[#5f665f] hover:bg-[#efe6d7] border border-[#d8cdb9]'
                   }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -226,22 +226,22 @@ export default function SkillsSection() {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3, delay: index * 0.1 }}
-                    className="bg-white rounded-lg p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
+                    className="bg-white rounded-lg p-4 shadow-sm border border-[#e3d9c8] hover:shadow-md transition-shadow"
                   >
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
+                        <div className="w-8 h-8 bg-[#17313b] rounded-lg flex items-center justify-center">
                           <skill.icon className="text-white" size={16} />
                         </div>
-                        <span className="font-semibold text-gray-900">{skill.name}</span>
+                        <span className="font-semibold text-[#17262d]">{skill.name}</span>
                       </div>
-                      <span className="text-sm text-gray-500 font-medium">{skill.level}%</span>
+                      <span className="text-sm text-[#6c675d] font-medium">{skill.level}%</span>
                     </div>
                     
                     {/* Progress Bar */}
-                    <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="w-full bg-[#e3d9c8] rounded-full h-2">
                       <motion.div
-                        className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full"
+                        className="bg-[#2b766f] h-2 rounded-full"
                         initial={{ width: 0 }}
                         animate={{ width: `${skill.level}%` }}
                         transition={{ duration: 1, delay: index * 0.1 }}
@@ -260,11 +260,7 @@ export default function SkillsSection() {
               viewport={{ once: true }}
               className="mt-8 grid grid-cols-2 gap-4"
             >
-              {/* <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg p-4 text-white text-center">
-                <div className="text-2xl font-bold">{categories.length}</div>
-                <div className="text-sm opacity-90">Categories</div>
-              </div> */}
-              <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg p-4 text-white text-center">
+              <div className="bg-[#17313b] rounded-lg p-4 text-white text-center">
                 <div className="text-2xl font-bold">{iconSlugs.length}+</div>
                 <div className="text-sm opacity-90">Technologies</div>
               </div>

@@ -43,9 +43,11 @@ export default function HeroSection() {
   }
 
   return (
-    <section className="bg-gradient-to-br from-blue-50 to-indigo-100 py-20 min-h-[80vh] flex items-center">
+    <section className="relative overflow-hidden bg-[#f7f2e8] py-14 md:py-20 lg:min-h-[80vh] flex items-center">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(217,149,47,0.16),transparent_28%),radial-gradient(circle_at_86%_18%,rgba(43,118,111,0.13),transparent_26%)]" />
+      <div className="absolute inset-x-0 bottom-0 h-px bg-[#d8cdb9]" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="relative grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
           {/* Left Side - Text Content */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -58,20 +60,20 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#17262d] mb-6 leading-tight">
                 Hi, I&apos;m{' '}
-                <span className="text-blue-600">Sanwal Bajwa</span>
+                <span className="text-[#2b766f]">Sanwal Bajwa</span>
               </h1>
               
-              <h2 className="text-xl md:text-2xl text-gray-600 mb-8">
-                Software Dev @ CodesFix
+              <h2 className="text-lg sm:text-xl md:text-2xl text-[#5f665f] mb-6 md:mb-8">
+                Software Developer | Builds Web and Mobile Apps
               </h2>
               
-              <p className="text-lg text-gray-700 mb-10 leading-relaxed">
-                Full-Stack Developer with 2+ years of hands-on experience, currently working as a Software Developer at CodesFix, where I build scalable, performance-driven web solutions.
+              <p className="text-base md:text-lg text-[#3e4948] mb-8 md:mb-10 leading-relaxed">
+                Full-Stack Developer with 2+ years of hands-on experience, currently working as a Software Developer, where I build scalable, performance-driven web solutions.
                 My core expertise lies in PHP, WordPress (custom plugins, themes, WooCommerce) and Next.js, with strong working knowledge of Node.js and modern JavaScript ecosystems.
                 <br></br><br></br>
-                On the mobile side, I’m expanding into React Native, backed by prior experience with Flutter & Dart, giving me a solid cross-platform development mindset.
+                On the mobile side, I&apos;m expanding into React Native, backed by prior experience with Flutter & Dart, giving me a solid cross-platform development mindset.
                 I focus on clean architecture, optimized performance, and maintainable code, turning business requirements into reliable, user-friendly applications.
               </p>
             </motion.div>
@@ -80,7 +82,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex flex-col sm:flex-row gap-4 mb-10"
+              className="flex flex-col sm:flex-row gap-4 mb-8 md:mb-10"
             >
               <Button 
                 size="lg" 
@@ -106,13 +108,13 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="flex items-center gap-4 mb-10"
+              className="flex items-center gap-4 mb-8 md:mb-10"
             >
               <a 
                 href="https://github.com/sanwalbajwa/" 
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center w-12 h-12 rounded-lg bg-white border border-gray-200 text-gray-700 hover:text-gray-900 hover:border-gray-300 hover:shadow-md transition-all duration-300 group"
+                className="flex items-center justify-center w-12 h-12 rounded-lg bg-white/80 border border-[#d8cdb9] text-[#3e4948] hover:text-[#17262d] hover:border-[#bcae97] hover:shadow-md transition-all duration-300 group"
                 aria-label="GitHub Profile"
               >
                 <Github size={20} className="group-hover:scale-110 transition-transform" />
@@ -121,7 +123,7 @@ export default function HeroSection() {
                 href="https://www.linkedin.com/in/sanwal-bajwa/" 
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center w-12 h-12 rounded-lg bg-white border border-gray-200 text-blue-600 hover:text-blue-700 hover:border-blue-300 hover:shadow-md transition-all duration-300 group"
+                className="flex items-center justify-center w-12 h-12 rounded-lg bg-white/80 border border-[#d8cdb9] text-[#2b766f] hover:text-[#1e5f59] hover:border-[#8fb3ad] hover:shadow-md transition-all duration-300 group"
                 aria-label="LinkedIn Profile"
               >
                 <Linkedin size={20} className="group-hover:scale-110 transition-transform" />
@@ -136,14 +138,14 @@ export default function HeroSection() {
             >
               <Link 
                 href="/portfolio" 
-                className="flex items-center text-blue-600 hover:text-blue-800 font-medium group transition-colors"
+                className="flex items-center text-[#2b766f] hover:text-[#17313b] font-medium group transition-colors"
               >
                 View My Work 
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={16} />
               </Link>
               <Link 
                 href="/blog" 
-                className="flex items-center text-blue-600 hover:text-blue-800 font-medium group transition-colors"
+                className="flex items-center text-[#2b766f] hover:text-[#17313b] font-medium group transition-colors"
               >
                 Read My Blog 
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={16} />
@@ -164,28 +166,28 @@ export default function HeroSection() {
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
-                className="relative w-80 h-80 lg:w-96 lg:h-96"
+                className="relative w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96"
               >
                 {/* Professional Background with Geometric Shapes */}
                 <div className="absolute inset-0">
                   {/* Primary Background Circle */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full"></div>
+                  <div className="absolute inset-0 bg-[#d9952f]/10 rounded-full"></div>
                   
                   {/* Geometric Elements */}
                   <motion.div
                     animate={{ rotate: [0, 360] }}
                     transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                    className="absolute -top-8 -right-8 w-16 h-16 border-2 border-blue-500/20 rounded-lg"
+                    className="absolute -top-5 -right-3 sm:-top-8 sm:-right-8 w-12 h-12 sm:w-16 sm:h-16 border-2 border-[#2b766f]/25 rounded-lg"
                   ></motion.div>
                   
                   <motion.div
                     animate={{ rotate: [360, 0] }}
                     transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                    className="absolute -bottom-6 -left-6 w-12 h-12 border-2 border-purple-500/20 rounded-full"
+                    className="absolute -bottom-4 -left-3 sm:-bottom-6 sm:-left-6 w-10 h-10 sm:w-12 sm:h-12 border-2 border-[#d9952f]/35 rounded-full"
                   ></motion.div>
                   
                   {/* Dotted Pattern */}
-                  <div className="absolute top-12 right-12 grid grid-cols-3 gap-2">
+                  <div className="absolute top-10 right-10 sm:top-12 sm:right-12 grid grid-cols-3 gap-2">
                     {[...Array(9)].map((_, i) => (
                       <motion.div
                         key={i}
@@ -196,15 +198,15 @@ export default function HeroSection() {
                           delay: i * 0.2,
                           ease: "easeInOut" 
                         }}
-                        className="w-2 h-2 bg-blue-500/30 rounded-full"
+                        className="w-2 h-2 bg-[#2b766f]/35 rounded-full"
                       />
                     ))}
                   </div>
                 </div>
                 
                 {/* Professional Image Frame */}
-                <div className="relative w-full h-full rounded-2xl overflow-hidden border border-gray-200/50 shadow-2xl bg-white p-2">
-                  <div className="w-full h-full rounded-xl overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
+                <div className="relative w-full h-full rounded-2xl overflow-hidden border border-[#d8cdb9] shadow-2xl bg-white/85 p-2">
+                  <div className="w-full h-full rounded-xl overflow-hidden bg-[#efe6d7]">
                     <Image
                       src="/hero-image.png"
                       alt="Sanwal Bajwa - Software Developer"
@@ -220,11 +222,11 @@ export default function HeroSection() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.8 }}
-                  className="absolute -top-6 left-8 bg-white rounded-lg shadow-lg px-3 py-2 border border-gray-100"
+                  className="absolute -top-4 left-4 sm:-top-6 sm:left-8 bg-white/95 rounded-lg shadow-lg px-3 py-2 border border-[#d8cdb9]"
                 >
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    <span className="text-sm font-medium text-gray-700">Available for work</span>
+                    <span className="text-sm font-medium text-[#3e4948]">Available for work</span>
                   </div>
                 </motion.div>
                 
@@ -232,11 +234,11 @@ export default function HeroSection() {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: 1 }}
-                  className="absolute top-1/4 -right-12 bg-white rounded-lg shadow-lg p-3 border border-gray-100"
+                  className="absolute top-5 right-2 sm:top-1/4 sm:-right-8 lg:-right-12 bg-white/95 rounded-lg shadow-lg p-3 border border-[#d8cdb9]"
                 >
                   <div className="text-center">
-                    <div className="text-lg font-bold text-blue-600">2+</div>
-                    <div className="text-xs text-gray-600">Years Exp</div>
+                    <div className="text-lg font-bold text-[#2b766f]">2+</div>
+                    <div className="text-xs text-[#6c675d]">Years Exp</div>
                   </div>
                 </motion.div>
                 
@@ -244,15 +246,15 @@ export default function HeroSection() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: 1.2 }}
-                  className="absolute bottom-1/4 -left-12 bg-white rounded-lg shadow-lg p-3 border border-gray-100"
+                  className="absolute bottom-16 left-0 sm:bottom-1/4 sm:-left-8 lg:-left-12 bg-white/95 rounded-lg shadow-lg p-3 border border-[#d8cdb9]"
                 >
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
+                    <div className="w-8 h-8 bg-[#17313b] rounded-lg flex items-center justify-center">
                       <span className="text-white text-xs font-bold">WP</span>
                     </div>
                     <div>
-                      <div className="text-xs font-medium text-gray-700">WordPress</div>
-                      <div className="text-xs text-gray-500">Expert</div>
+                      <div className="text-xs font-medium text-[#3e4948]">WordPress</div>
+                      <div className="text-xs text-[#6c675d]">Expert</div>
                     </div>
                   </div>
                 </motion.div>
@@ -261,15 +263,15 @@ export default function HeroSection() {
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 1.4 }}
-                  className="absolute -bottom-8 right-12 bg-white rounded-lg shadow-lg p-3 border border-gray-100"
+                  className="absolute -bottom-5 right-4 sm:-bottom-8 sm:right-12 bg-white/95 rounded-lg shadow-lg p-3 border border-[#d8cdb9]"
                 >
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-lg flex items-center justify-center">
+                    <div className="w-8 h-8 bg-[#2b766f] rounded-lg flex items-center justify-center">
                       <span className="text-white text-xs font-bold">JS</span>
                     </div>
                     <div>
-                      <div className="text-xs font-medium text-gray-700">Next.js & React</div>
-                      <div className="text-xs text-gray-500">Expert</div>
+                      <div className="text-xs font-medium text-[#3e4948]">Next.js & React</div>
+                      <div className="text-xs text-[#6c675d]">Expert</div>
                     </div>
                   </div>
                 </motion.div>
@@ -278,7 +280,7 @@ export default function HeroSection() {
                 <motion.div
                   animate={{ opacity: [0.1, 0.3, 0.1] }}
                   transition={{ duration: 3, repeat: Infinity }}
-                  className="absolute top-8 left-4 text-gray-300 text-xs font-mono"
+                  className="absolute top-8 left-4 text-[#bcae97] text-xs font-mono"
                 >
                   &lt;code/&gt;
                 </motion.div>
@@ -286,7 +288,7 @@ export default function HeroSection() {
                 <motion.div
                   animate={{ opacity: [0.1, 0.3, 0.1] }}
                   transition={{ duration: 4, repeat: Infinity, delay: 1 }}
-                  className="absolute bottom-12 right-4 text-gray-300 text-xs font-mono"
+                  className="absolute bottom-12 right-4 text-[#bcae97] text-xs font-mono"
                 >
                   {`{ }`}
                 </motion.div>
@@ -294,7 +296,7 @@ export default function HeroSection() {
 
               {/* Professional Background Glow */}
               <div className="absolute inset-0 -z-10">
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 sm:w-96 sm:h-96 bg-[#2b766f]/15 rounded-full blur-3xl"></div>
               </div>
             </div>
           </motion.div>
