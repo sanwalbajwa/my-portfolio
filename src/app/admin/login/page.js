@@ -39,16 +39,16 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-[#f7f2e8] px-4">
+      <div className="bg-[#fbf8f1] p-8 rounded-lg shadow-md border border-[#d8cdb9] w-full max-w-md">
         <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">Admin Login</h1>
-          <p className="text-gray-600 mt-2">Sign in to access the admin panel</p>
+          <h1 className="text-2xl font-bold text-[#17262d]">Admin Login</h1>
+          <p className="text-[#5f665f] mt-2">Sign in to access the admin panel</p>
         </div>
         
         <form onSubmit={handleSignIn} className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="email" className="block text-sm font-medium text-[#3e4948] mb-1">
               Email Address
             </label>
             <input
@@ -58,12 +58,12 @@ export default function AdminLogin() {
               onChange={(e) => setEmail(e.target.value)}
               required
               placeholder="Enter your email"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-[#d8cdb9] rounded-md focus:outline-none focus:ring-2 focus:ring-[#2b766f]"
             />
           </div>
           
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="password" className="block text-sm font-medium text-[#3e4948] mb-1">
               Password
             </label>
             <input
@@ -73,7 +73,7 @@ export default function AdminLogin() {
               onChange={(e) => setPassword(e.target.value)}
               required
               placeholder="Enter your password"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-[#d8cdb9] rounded-md focus:outline-none focus:ring-2 focus:ring-[#2b766f]"
             />
           </div>
 
@@ -86,7 +86,7 @@ export default function AdminLogin() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-[#2b766f] text-white py-2 px-4 rounded-md hover:bg-[#17313b] disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </button>

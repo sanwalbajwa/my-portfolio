@@ -16,10 +16,21 @@ export const metadata = {
 
 export default async function Portfolio() {
   // Fetch projects from Supabase
-  const { data: projects, error } = await supabase
+  let { data: projects, error } = await supabase
     .from('projects')
     .select('*')
+    .order('display_order', { ascending: true, nullsFirst: false })
     .order('created_at', { ascending: false })
+
+  if (error?.message?.includes('display_order')) {
+    const fallback = await supabase
+      .from('projects')
+      .select('*')
+      .order('created_at', { ascending: false })
+
+    projects = fallback.data
+    error = fallback.error
+  }
 
   if (error) {
     console.error('Error fetching projects:', error)

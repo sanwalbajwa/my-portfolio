@@ -36,18 +36,18 @@ export default function AdminDashboard() {
   }, [])
 
   const statCards = [
-    { title: 'Blog Posts', value: stats.blogs, icon: FileText, color: 'bg-blue-500' },
-    { title: 'Projects', value: stats.projects, icon: FolderOpen, color: 'bg-green-500' },
-    { title: 'Certificates', value: stats.certificates, icon: Award, color: 'bg-yellow-500' },
-    { title: 'CV Versions', value: stats.cvs, icon: Upload, color: 'bg-red-500' },
-    { title: 'Contact Messages', value: stats.contacts, icon: Mail, color: 'bg-purple-500' }
+    { title: 'Blog Posts', value: stats.blogs, icon: FileText, color: 'bg-[#2b766f]' },
+    { title: 'Projects', value: stats.projects, icon: FolderOpen, color: 'bg-[#17313b]' },
+    { title: 'Certificates', value: stats.certificates, icon: Award, color: 'bg-[#d9952f]' },
+    { title: 'CV Versions', value: stats.cvs, icon: Upload, color: 'bg-[#9a621d]' },
+    { title: 'Contact Messages', value: stats.contacts, icon: Mail, color: 'bg-[#5f665f]' }
   ]
 
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-600">Welcome to your admin panel</p>
+        <h1 className="text-3xl font-bold text-[#17262d]">Dashboard</h1>
+        <p className="text-[#5f665f]">Welcome to your admin panel</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
@@ -74,31 +74,31 @@ export default function AdminDashboard() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <a
               href="/admin/blogs"
-              className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+              className="p-4 border border-[#d8cdb9] rounded-lg hover:bg-[#efe6d7] transition-colors"
             >
               <h3 className="font-medium mb-2">Manage Blog Posts</h3>
-              <p className="text-sm text-gray-600">Create, edit, and delete blog posts</p>
+              <p className="text-sm text-[#5f665f]">Create, edit, and delete blog posts</p>
             </a>
             <a
               href="/admin/projects"
-              className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+              className="p-4 border border-[#d8cdb9] rounded-lg hover:bg-[#efe6d7] transition-colors"
             >
               <h3 className="font-medium mb-2">Manage Projects</h3>
-              <p className="text-sm text-gray-600">Add and update your portfolio projects</p>
+              <p className="text-sm text-[#5f665f]">Add and update your portfolio projects</p>
             </a>
             <a
               href="/admin/cv"
-              className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+              className="p-4 border border-[#d8cdb9] rounded-lg hover:bg-[#efe6d7] transition-colors"
             >
               <h3 className="font-medium mb-2">CV Management</h3>
-              <p className="text-sm text-gray-600">Upload and manage your CV versions</p>
+              <p className="text-sm text-[#5f665f]">Upload and manage your CV versions</p>
             </a>
             <a
               href="/admin/contacts"
-              className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+              className="p-4 border border-[#d8cdb9] rounded-lg hover:bg-[#efe6d7] transition-colors"
             >
               <h3 className="font-medium mb-2">View Messages</h3>
-              <p className="text-sm text-gray-600">Check contact form submissions</p>
+              <p className="text-sm text-[#5f665f]">Check contact form submissions</p>
             </a>
           </div>
         </CardContent>

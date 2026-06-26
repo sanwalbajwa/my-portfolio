@@ -5,30 +5,34 @@ import { Button } from '../../../components/ui/button'
 import { Input } from '../../../components/ui/input'
 import { Textarea } from '../../../components/ui/textarea'
 import { Badge } from '../../../components/ui/badge'
-import { Plus, Edit, Trash2, Save, X, ExternalLink, Github } from 'lucide-react'
+import { Plus, Edit, Trash2, Save, X, ExternalLink, Github, ArrowUp, ArrowDown } from 'lucide-react'
 import { supabase } from '../../../lib/supabase'
 import Image from 'next/image'
 import ProjectImageUpload from '../../../components/ProjectImageUpload'
 
 export default function AdminProjects() {
+  const emptyProjectForm = {
+    title: '',
+    description: '',
+    tech_stack: '',
+    image: '',
+    category: 'Web Development',
+    display_order: '',
+    is_live: false,
+    live_url: '',
+    is_code_available: true,
+    github_url: ''
+  }
+
   const [projects, setProjects] = useState([])
   const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(true)
   const [editingId, setEditingId] = useState(null)
   const [showAddForm, setShowAddForm] = useState(false)
   const [showCategoryForm, setShowCategoryForm] = useState(false)
+  const [orderColumnAvailable, setOrderColumnAvailable] = useState(true)
   const [newCategoryName, setNewCategoryName] = useState('')
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    tech_stack: '',
-    image: '',
-    category: 'Web Development',
-    is_live: false,
-    live_url: '',
-    is_code_available: true,
-    github_url: ''
-  })
+  const [formData, setFormData] = useState(emptyProjectForm)
 
   useEffect(() => {
     fetchProjects()
@@ -36,10 +40,24 @@ export default function AdminProjects() {
   }, [])
 
   const fetchProjects = async () => {
-    const { data, error } = await supabase
+    let { data, error } = await supabase
       .from('projects')
       .select('*')
+      .order('display_order', { ascending: true, nullsFirst: false })
       .order('created_at', { ascending: false })
+
+    if (error?.message?.includes('display_order')) {
+      setOrderColumnAvailable(false)
+      const fallback = await supabase
+        .from('projects')
+        .select('*')
+        .order('created_at', { ascending: false })
+
+      data = fallback.data
+      error = fallback.error
+    } else if (!error) {
+      setOrderColumnAvailable(true)
+    }
     
     if (!error) setProjects(data || [])
     setLoading(false)
@@ -66,6 +84,40 @@ export default function AdminProjects() {
     return techString.split(',').map(tech => tech.trim()).filter(tech => tech)
   }
 
+  const getProjectOrder = (project, index) => {
+    return Number.isFinite(Number(project.display_order)) ? Number(project.display_order) : index + 1
+  }
+
+  const getNextDisplayOrder = () => {
+    return projects.reduce((maxOrder, project, index) => {
+      return Math.max(maxOrder, getProjectOrder(project, index))
+    }, 0) + 1
+  }
+
+  const getProjectPayload = () => {
+    const payload = {
+      ...formData,
+      tech_stack: formatTechStack(formData.tech_stack)
+    }
+
+    if (orderColumnAvailable) {
+      payload.display_order = formData.display_order === '' ? null : Number(formData.display_order)
+    } else {
+      delete payload.display_order
+    }
+
+    return payload
+  }
+
+  const handleShowAddForm = () => {
+    setEditingId(null)
+    setFormData({
+      ...emptyProjectForm,
+      display_order: getNextDisplayOrder()
+    })
+    setShowAddForm(true)
+  }
+
   const handleAddCategory = async () => {
     if (!newCategoryName.trim()) return
 
@@ -87,27 +139,14 @@ export default function AdminProjects() {
       return
     }
 
-    const projectData = {
-      ...formData,
-      tech_stack: formatTechStack(formData.tech_stack)
-    }
+    const projectData = getProjectPayload()
 
     const { error } = await supabase
       .from('projects')
       .insert([projectData])
 
     if (!error) {
-      setFormData({
-        title: '',
-        description: '',
-        tech_stack: '',
-        image: '',
-        category: 'Web Development',
-        is_live: false,
-        live_url: '',
-        is_code_available: true,
-        github_url: ''
-      })
+      setFormData(emptyProjectForm)
       setShowAddForm(false)
       fetchProjects()
     } else {
@@ -119,6 +158,7 @@ export default function AdminProjects() {
     setFormData({
       ...project,
       tech_stack: Array.isArray(project.tech_stack) ? project.tech_stack.join(', ') : project.tech_stack,
+      display_order: project.display_order ?? '',
       is_live: project.is_live || false,
       is_code_available: project.is_code_available !== false
     })
@@ -126,10 +166,7 @@ export default function AdminProjects() {
   }
 
   const handleUpdate = async () => {
-    const projectData = {
-      ...formData,
-      tech_stack: formatTechStack(formData.tech_stack)
-    }
+    const projectData = getProjectPayload()
 
     const { error } = await supabase
       .from('projects')
@@ -138,17 +175,7 @@ export default function AdminProjects() {
 
     if (!error) {
       setEditingId(null)
-      setFormData({
-        title: '',
-        description: '',
-        tech_stack: '',
-        image: '',
-        category: 'Web Development',
-        is_live: false,
-        live_url: '',
-        is_code_available: true,
-        github_url: ''
-      })
+      setFormData(emptyProjectForm)
       fetchProjects()
     } else {
       alert('Error updating project: ' + error.message)
@@ -169,17 +196,41 @@ export default function AdminProjects() {
   const handleCancel = () => {
     setEditingId(null)
     setShowAddForm(false)
-    setFormData({
-      title: '',
-      description: '',
-      tech_stack: '',
-      image: '',
-      category: 'Web Development',
-      is_live: false,
-      live_url: '',
-      is_code_available: true,
-      github_url: ''
-    })
+    setFormData(emptyProjectForm)
+  }
+
+  const handleMoveProject = async (index, direction) => {
+    if (!orderColumnAvailable) {
+      alert('Project ordering needs the display_order database migration first.')
+      return
+    }
+
+    const targetIndex = index + direction
+    const currentProject = projects[index]
+    const targetProject = projects[targetIndex]
+
+    if (!currentProject || !targetProject) return
+
+    const currentOrder = getProjectOrder(currentProject, index)
+    const targetOrder = getProjectOrder(targetProject, targetIndex)
+
+    const [{ error: currentError }, { error: targetError }] = await Promise.all([
+      supabase
+        .from('projects')
+        .update({ display_order: targetOrder })
+        .eq('id', currentProject.id),
+      supabase
+        .from('projects')
+        .update({ display_order: currentOrder })
+        .eq('id', targetProject.id)
+    ])
+
+    if (currentError || targetError) {
+      alert('Error updating project order')
+      return
+    }
+
+    fetchProjects()
   }
 
   if (loading) {
@@ -190,8 +241,8 @@ export default function AdminProjects() {
     <div>
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Projects</h1>
-          <p className="text-gray-600">Manage your portfolio projects</p>
+          <h1 className="text-3xl font-bold text-[#17262d]">Projects</h1>
+          <p className="text-[#5f665f]">Manage your portfolio projects</p>
         </div>
         <div className="flex gap-2">
           <Button 
@@ -202,12 +253,21 @@ export default function AdminProjects() {
             <Plus size={16} />
             Add Category
           </Button>
-          <Button onClick={() => setShowAddForm(true)} className="flex items-center gap-2">
+          <Button onClick={handleShowAddForm} className="flex items-center gap-2">
             <Plus size={16} />
             Add New Project
           </Button>
         </div>
       </div>
+
+      {!orderColumnAvailable && (
+        <Card className="mb-6 border-[#d9952f] bg-[#f4dfb9]">
+          <CardContent className="p-4 text-sm text-[#7a4b16]">
+            Project ordering is ready in the app, but the database migration still needs to be applied.
+            Run the SQL file at supabase/migrations/20260626000000_add_project_display_order.sql in Supabase.
+          </CardContent>
+        </Card>
+      )}
 
       {/* Add Category Form */}
       {showCategoryForm && (
@@ -242,7 +302,7 @@ export default function AdminProjects() {
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Basic Info */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium mb-2">Project Title *</label>
                 <Input
@@ -258,7 +318,7 @@ export default function AdminProjects() {
                   name="category"
                   value={formData.category}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-[#d8cdb9] rounded-md focus:outline-none focus:ring-2 focus:ring-[#2b766f]"
                 >
                   {categories.map((cat) => (
                     <option key={cat.id} value={cat.name}>
@@ -266,6 +326,18 @@ export default function AdminProjects() {
                     </option>
                   ))}
                 </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Display Order</label>
+                <Input
+                  name="display_order"
+                  type="number"
+                  min="1"
+                  value={formData.display_order}
+                  onChange={handleInputChange}
+                  placeholder="1"
+                  disabled={!orderColumnAvailable}
+                />
               </div>
             </div>
             
@@ -297,7 +369,7 @@ export default function AdminProjects() {
             />
 
             {/* Project Status & URLs */}
-            <div className="border rounded-lg p-4 bg-gray-50">
+            <div className="border border-[#d8cdb9] rounded-lg p-4 bg-[#f7f2e8]">
               <h3 className="font-medium mb-4">Project Status & Links</h3>
               
               {/* Live Site Section */}
@@ -378,7 +450,7 @@ export default function AdminProjects() {
 
       {/* Projects List */}
       <div className="grid gap-6">
-        {projects.map((project) => (
+        {projects.map((project, index) => (
           <Card key={project.id}>
             <CardContent className="p-6">
               <div className="flex gap-6">
@@ -401,13 +473,14 @@ export default function AdminProjects() {
                       <div className="flex items-center gap-2 mb-1">
                         <h3 className="text-xl font-semibold">{project.title}</h3>
                         <Badge variant="outline">{project.category}</Badge>
+                        <Badge variant="secondary">Order {getProjectOrder(project, index)}</Badge>
                       </div>
-                      <div className="flex items-center gap-4 text-sm text-gray-500 mb-2">
+                      <div className="flex items-center gap-4 text-sm text-[#6c675d] mb-2">
                         <span>Created: {new Date(project.created_at).toLocaleDateString()}</span>
-                        <span className={`flex items-center gap-1 ${project.is_live ? 'text-green-600' : 'text-gray-500'}`}>
+                        <span className={`flex items-center gap-1 ${project.is_live ? 'text-[#2b766f]' : 'text-[#6c675d]'}`}>
                           {project.is_live ? '🟢 Live' : '🔒 Private'}
                         </span>
-                        <span className={`flex items-center gap-1 ${project.is_code_available ? 'text-blue-600' : 'text-gray-500'}`}>
+                        <span className={`flex items-center gap-1 ${project.is_code_available ? 'text-[#2b766f]' : 'text-[#6c675d]'}`}>
                           {project.is_code_available ? '📂 Open Source' : '🔒 Private Code'}
                         </span>
                       </div>
@@ -430,6 +503,25 @@ export default function AdminProjects() {
                           </a>
                         </Button>
                       )}
+
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleMoveProject(index, -1)}
+                        disabled={index === 0}
+                        aria-label="Move project up"
+                      >
+                        <ArrowUp size={14} />
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleMoveProject(index, 1)}
+                        disabled={index === projects.length - 1}
+                        aria-label="Move project down"
+                      >
+                        <ArrowDown size={14} />
+                      </Button>
                       
                       <Button variant="outline" size="sm" onClick={() => handleEdit(project)}>
                         <Edit size={14} />
@@ -440,7 +532,7 @@ export default function AdminProjects() {
                     </div>
                   </div>
                   
-                  <p className="text-gray-600 mb-3 line-clamp-2">{project.description}</p>
+                  <p className="text-[#5f665f] mb-3 line-clamp-2">{project.description}</p>
                   
                   <div className="flex flex-wrap gap-2">
                     {project.tech_stack && project.tech_stack.map((tech, index) => (
@@ -459,7 +551,7 @@ export default function AdminProjects() {
       {projects.length === 0 && (
         <Card>
           <CardContent className="text-center py-12">
-            <p className="text-gray-500">No projects yet. Add your first project!</p>
+            <p className="text-[#6c675d]">No projects yet. Add your first project!</p>
           </CardContent>
         </Card>
       )}

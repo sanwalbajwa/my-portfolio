@@ -53,7 +53,7 @@ export default function AdminLayout({ children }) {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#2b766f]"></div>
       </div>
     )
   }
@@ -63,16 +63,16 @@ export default function AdminLayout({ children }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#f7f2e8]">
       {/* Admin Header */}
-      <header className="bg-white shadow-sm border-b">
+      <header className="bg-[#fbf8f1] shadow-sm border-b border-[#d8cdb9]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
+          <div className="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:justify-between sm:h-16 sm:py-0">
             <div className="flex items-center">
-              <h1 className="text-xl font-semibold text-gray-900">Admin Panel</h1>
+              <h1 className="text-xl font-semibold text-[#17262d]">Admin Panel</h1>
             </div>
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-600">Welcome, {user.email}</span>
+            <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+              <span className="text-sm text-[#5f665f] break-all">Welcome, {user.email}</span>
               <Button variant="ghost" size="sm" asChild>
                 <Link href="/" className="flex items-center gap-2">
                   <Home size={16} />
@@ -88,15 +88,15 @@ export default function AdminLayout({ children }) {
         </div>
       </header>
 
-      <div className="flex">
+      <div className="flex flex-col lg:flex-row">
         {/* Sidebar */}
-        <nav className="w-64 bg-white shadow-sm min-h-screen">
-          <div className="p-4">
-            <div className="space-y-2">
+        <nav className="bg-[#fbf8f1] shadow-sm border-b border-[#d8cdb9] lg:w-64 lg:min-h-screen lg:border-b-0 lg:border-r">
+          <div className="p-3 lg:p-4">
+            <div className="flex gap-2 overflow-x-auto pb-1 lg:block lg:space-y-2 lg:overflow-visible lg:pb-0">
               <Link
                 href="/admin"
-                className={`flex items-center gap-3 px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100 ${
-                  pathname === '/admin' ? 'bg-blue-50 text-blue-700' : ''
+                className={`flex shrink-0 items-center gap-3 px-3 py-2 text-[#3e4948] rounded-lg hover:bg-[#efe6d7] ${
+                  pathname === '/admin' ? 'bg-[#e0eee9] text-[#2b766f]' : ''
                 }`}
               >
                 <Home size={18} />
@@ -104,8 +104,8 @@ export default function AdminLayout({ children }) {
               </Link>
               <Link
                 href="/admin/blogs"
-                className={`flex items-center gap-3 px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100 ${
-                  pathname === '/admin/blogs' ? 'bg-blue-50 text-blue-700' : ''
+                className={`flex shrink-0 items-center gap-3 px-3 py-2 text-[#3e4948] rounded-lg hover:bg-[#efe6d7] ${
+                  pathname === '/admin/blogs' ? 'bg-[#e0eee9] text-[#2b766f]' : ''
                 }`}
               >
                 <FileText size={18} />
@@ -113,8 +113,8 @@ export default function AdminLayout({ children }) {
               </Link>
               <Link
                 href="/admin/projects"
-                className={`flex items-center gap-3 px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100 ${
-                  pathname === '/admin/projects' ? 'bg-blue-50 text-blue-700' : ''
+                className={`flex shrink-0 items-center gap-3 px-3 py-2 text-[#3e4948] rounded-lg hover:bg-[#efe6d7] ${
+                  pathname === '/admin/projects' ? 'bg-[#e0eee9] text-[#2b766f]' : ''
                 }`}
               >
                 <PlusCircle size={18} />
@@ -122,8 +122,8 @@ export default function AdminLayout({ children }) {
               </Link>
               <Link
                 href="/admin/certificates"
-                className={`flex items-center gap-3 px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100 ${
-                  pathname === '/admin/certificates' ? 'bg-blue-50 text-blue-700' : ''
+                className={`flex shrink-0 items-center gap-3 px-3 py-2 text-[#3e4948] rounded-lg hover:bg-[#efe6d7] ${
+                  pathname === '/admin/certificates' ? 'bg-[#e0eee9] text-[#2b766f]' : ''
                 }`}
               >
                 <Award size={18} />
@@ -132,8 +132,8 @@ export default function AdminLayout({ children }) {
               {/* Add CV Management Link */}
               <Link
                 href="/admin/cv"
-                className={`flex items-center gap-3 px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100 ${
-                  pathname === '/admin/cv' ? 'bg-blue-50 text-blue-700' : ''
+                className={`flex shrink-0 items-center gap-3 px-3 py-2 text-[#3e4948] rounded-lg hover:bg-[#efe6d7] ${
+                  pathname === '/admin/cv' ? 'bg-[#e0eee9] text-[#2b766f]' : ''
                 }`}
               >
                 <Upload size={18} />
@@ -141,8 +141,8 @@ export default function AdminLayout({ children }) {
               </Link>
               <Link
                 href="/admin/contacts"
-                className={`flex items-center gap-3 px-3 py-2 text-gray-700 rounded-lg hover:bg-gray-100 ${
-                  pathname === '/admin/contacts' ? 'bg-blue-50 text-blue-700' : ''
+                className={`flex shrink-0 items-center gap-3 px-3 py-2 text-[#3e4948] rounded-lg hover:bg-[#efe6d7] ${
+                  pathname === '/admin/contacts' ? 'bg-[#e0eee9] text-[#2b766f]' : ''
                 }`}
               >
                 <Mail size={18} />
@@ -153,7 +153,7 @@ export default function AdminLayout({ children }) {
         </nav>
 
         {/* Main Content */}
-        <main className="flex-1 p-8">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 min-w-0">
           {children}
         </main>
       </div>

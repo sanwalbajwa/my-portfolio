@@ -242,8 +242,8 @@ export default function AdminBlogs() {
     <div>
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Blog Posts</h1>
-          <p className="text-gray-600">Manage your blog content with SEO optimization</p>
+          <h1 className="text-3xl font-bold text-[#17262d]">Blog Posts</h1>
+          <p className="text-[#5f665f]">Manage your blog content with SEO optimization</p>
         </div>
         <div className="flex gap-2">
           <Button 
@@ -346,7 +346,7 @@ export default function AdminBlogs() {
                   name="category"
                   value={formData.category}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-[#d8cdb9] rounded-md focus:outline-none focus:ring-2 focus:ring-[#2b766f]"
                 >
                   {categories.map((cat) => (
                     <option key={cat.id} value={cat.name}>
@@ -361,7 +361,7 @@ export default function AdminBlogs() {
                   name="status"
                   value={formData.status}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-[#d8cdb9] rounded-md focus:outline-none focus:ring-2 focus:ring-[#2b766f]"
                 >
                   <option value="draft">Draft</option>
                   <option value="published">Published</option>
@@ -376,9 +376,9 @@ export default function AdminBlogs() {
                     name="is_featured"
                     checked={formData.is_featured}
                     onChange={handleInputChange}
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                    className="w-4 h-4 text-[#2b766f] bg-[#fbf8f1] border-[#d8cdb9] rounded focus:ring-[#2b766f]"
                   />
-                  <label htmlFor="is_featured" className="ml-2 text-sm text-gray-700">
+                  <label htmlFor="is_featured" className="ml-2 text-sm text-[#3e4948]">
                     Show on homepage
                   </label>
                 </div>
@@ -395,7 +395,7 @@ export default function AdminBlogs() {
             </div>
 
             {/* SEO Section */}
-            <div className="border rounded-lg p-4 bg-gray-50">
+            <div className="border border-[#d8cdb9] rounded-lg p-4 bg-[#f7f2e8]">
               <h3 className="font-medium mb-4">SEO Settings</h3>
               
               <div className="grid grid-cols-1 gap-4">
@@ -481,14 +481,14 @@ export default function AdminBlogs() {
                       {blog.status}
                     </Badge>
                     {blog.is_featured && (
-                      <Badge className="bg-blue-600 text-white">
+                      <Badge className="bg-[#2b766f] text-white">
                         Featured
                       </Badge>
                     )}
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-[#6c675d]">
                       {new Date(blog.created_at).toLocaleDateString()}
                     </span>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-[#6c675d]">
                       {blog.read_time || 5} min read
                     </span>
                   </div>
@@ -511,7 +511,7 @@ export default function AdminBlogs() {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600 line-clamp-3 mb-3">
+              <p className="text-[#5f665f] line-clamp-3 mb-3">
                 {blog.excerpt || blog.content.replace(/<[^>]*>/g, '').substring(0, 200) + '...'}
               </p>
               {blog.tags && blog.tags.length > 0 && (
@@ -531,7 +531,7 @@ export default function AdminBlogs() {
       {blogs.length === 0 && (
         <Card>
           <CardContent className="text-center py-12">
-            <p className="text-gray-500">No blog posts yet. Create your first post!</p>
+            <p className="text-[#6c675d]">No blog posts yet. Create your first post!</p>
           </CardContent>
         </Card>
       )}

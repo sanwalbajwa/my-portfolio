@@ -107,8 +107,8 @@ export default function AdminCertificates() {
     <div>
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Certificates</h1>
-          <p className="text-gray-600">Manage your professional certificates</p>
+          <h1 className="text-3xl font-bold text-[#17262d]">Certificates</h1>
+          <p className="text-[#5f665f]">Manage your professional certificates</p>
         </div>
         <Button onClick={() => setShowAddForm(true)} className="flex items-center gap-2">
           <Plus size={16} />
@@ -154,7 +154,7 @@ export default function AdminCertificates() {
                 onChange={handleInputChange}
                 placeholder="Brief description of what you learned or achieved..."
                 rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-[#d8cdb9] rounded-md focus:outline-none focus:ring-2 focus:ring-[#2b766f]"
               />
             </div>
 
@@ -165,7 +165,7 @@ export default function AdminCertificates() {
 
             {formData.image && (
               <div className="mt-2">
-                <p className="text-sm text-gray-600 mb-2">Preview:</p>
+                <p className="text-sm text-[#5f665f] mb-2">Preview:</p>
                 <div className="relative w-48 h-32 rounded-lg overflow-hidden">
                   <Image
                     src={formData.image}
@@ -213,12 +213,12 @@ export default function AdminCertificates() {
               
               <div className="p-4">
                 <div className="flex items-start gap-2 mb-3">
-                  <Award className="text-yellow-600 mt-1 flex-shrink-0" size={18} />
+                  <Award className="text-[#d9952f] mt-1 flex-shrink-0" size={18} />
                   <div className="flex-1 min-w-0">
                     <h3 className="font-semibold text-sm leading-tight line-clamp-2">
                       {certificate.title}
                     </h3>
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-xs text-[#6c675d] mt-1">
                       {new Date(certificate.created_at).getFullYear()}
                     </p>
                   </div>
@@ -272,13 +272,13 @@ export default function AdminCertificates() {
                 </thead>
                 <tbody>
                   {certificates.map((certificate) => (
-                    <tr key={certificate.id} className="border-b hover:bg-gray-50">
+                    <tr key={certificate.id} className="border-b hover:bg-[#f7f2e8]">
                       <td className="p-2 font-medium">{certificate.title}</td>
                       <td className="p-2">{certificate.issuer}</td>
-                      <td className="p-2 text-gray-600 max-w-xs truncate">
+                      <td className="p-2 text-[#5f665f] max-w-xs truncate">
                         {certificate.description || 'No description'}
                       </td>
-                      <td className="p-2 text-gray-500">
+                      <td className="p-2 text-[#6c675d]">
                         {new Date(certificate.created_at).toLocaleDateString()}
                       </td>
                       <td className="p-2">
@@ -311,8 +311,8 @@ export default function AdminCertificates() {
       {certificates.length === 0 && (
         <Card>
           <CardContent className="text-center py-12">
-            <Award className="mx-auto mb-4 text-gray-400" size={48} />
-            <p className="text-gray-500">No certificates yet. Add your first certificate!</p>
+            <Award className="mx-auto mb-4 text-[#bcae97]" size={48} />
+            <p className="text-[#6c675d]">No certificates yet. Add your first certificate!</p>
           </CardContent>
         </Card>
       )}

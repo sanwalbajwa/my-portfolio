@@ -40,10 +40,21 @@ export default function FeaturedWork() {
   const fetchProjectsAndCategories = async () => {
     try {
       // Fetch ALL projects (removed limit)
-      const { data: projectsData, error: projectsError } = await supabase
+      let { data: projectsData, error: projectsError } = await supabase
         .from('projects')
         .select('*')
+        .order('display_order', { ascending: true, nullsFirst: false })
         .order('created_at', { ascending: false })
+
+      if (projectsError?.message?.includes('display_order')) {
+        const fallback = await supabase
+          .from('projects')
+          .select('*')
+          .order('created_at', { ascending: false })
+
+        projectsData = fallback.data
+        projectsError = fallback.error
+      }
 
       // Fetch categories
       const { data: categoriesData, error: categoriesError } = await supabase

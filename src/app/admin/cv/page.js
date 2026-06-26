@@ -114,8 +114,8 @@ export default function AdminCV() {
     <div>
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">CV Management</h1>
-          <p className="text-gray-600">Manage your curriculum vitae versions</p>
+          <h1 className="text-3xl font-bold text-[#17262d]">CV Management</h1>
+          <p className="text-[#5f665f]">Manage your curriculum vitae versions</p>
         </div>
       </div>
 
@@ -148,12 +148,12 @@ export default function AdminCV() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg border border-green-200">
+            <div className="flex items-center justify-between p-4 bg-[#e0eee9] rounded-lg border border-[#8fb3ad]">
               <div className="flex items-center gap-3">
-                <FileText className="text-green-600" size={24} />
+                <FileText className="text-[#2b766f]" size={24} />
                 <div>
                   <p className="font-medium">{currentCV.original_name}</p>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-[#5f665f]">
                     This CV will be downloaded when users click &quot;Download CV&quot; button
                   </p>
                 </div>
@@ -186,31 +186,31 @@ export default function AdminCV() {
         </CardHeader>
         <CardContent>
           {cvHistory.length === 0 ? (
-            <p className="text-gray-500 text-center py-8">No CVs uploaded yet</p>
+            <p className="text-[#6c675d] text-center py-8">No CVs uploaded yet</p>
           ) : (
             <div className="space-y-4">
               {cvHistory.map((cv) => (
                 <div
                   key={cv.id}
-                  className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50"
+                  className="flex items-center justify-between p-4 border border-[#d8cdb9] rounded-lg hover:bg-[#f7f2e8]"
                 >
                   <div className="flex items-center gap-3">
-                    <FileText className="text-red-600" size={20} />
+                    <FileText className="text-[#d9952f]" size={20} />
                     <div>
                       <div className="flex items-center gap-2">
                         <p className="font-medium">{cv.original_name}</p>
                         {cv.is_active && (
-                          <Badge className="bg-green-100 text-green-800 text-xs">
+                          <Badge className="bg-[#e0eee9] text-[#2b766f] text-xs">
                             Active
                           </Badge>
                         )}
                       </div>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-[#6c675d]">
                         {(cv.file_size / 1024 / 1024).toFixed(2)} MB • 
                         Uploaded {new Date(cv.upload_date).toLocaleDateString()}
                       </p>
                       {cv.description && (
-                        <p className="text-xs text-gray-400">{cv.description}</p>
+                        <p className="text-xs text-[#8b8376]">{cv.description}</p>
                       )}
                     </div>
                   </div>
@@ -221,7 +221,7 @@ export default function AdminCV() {
                         variant="outline"
                         size="sm"
                         onClick={() => setActiveCV(cv.id)}
-                        className="text-green-600 hover:text-green-800"
+                        className="text-[#2b766f] hover:text-[#17313b]"
                       >
                         Set Active
                       </Button>

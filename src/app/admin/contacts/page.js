@@ -58,8 +58,8 @@ export default function AdminContacts() {
     <div>
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Contact Messages</h1>
-          <p className="text-gray-600">View and manage contact form submissions</p>
+          <h1 className="text-3xl font-bold text-[#17262d]">Contact Messages</h1>
+          <p className="text-[#5f665f]">View and manage contact form submissions</p>
         </div>
         <Badge variant="secondary" className="text-lg px-3 py-1">
           {contacts.length} Total Messages
@@ -71,11 +71,11 @@ export default function AdminContacts() {
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                <Mail className="text-blue-600" size={20} />
+              <div className="w-10 h-10 bg-[#e0eee9] rounded-lg flex items-center justify-center">
+                <Mail className="text-[#2b766f]" size={20} />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Total Messages</p>
+                <p className="text-sm text-[#5f665f]">Total Messages</p>
                 <p className="text-2xl font-bold">{contacts.length}</p>
               </div>
             </div>
@@ -85,11 +85,11 @@ export default function AdminContacts() {
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                <Calendar className="text-green-600" size={20} />
+              <div className="w-10 h-10 bg-[#f4dfb9] rounded-lg flex items-center justify-center">
+                <Calendar className="text-[#9a621d]" size={20} />
               </div>
               <div>
-                <p className="text-sm text-gray-600">This Month</p>
+                <p className="text-sm text-[#5f665f]">This Month</p>
                 <p className="text-2xl font-bold">
                   {contacts.filter(contact => {
                     const contactDate = new Date(contact.created_at)
@@ -106,11 +106,11 @@ export default function AdminContacts() {
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                <User className="text-purple-600" size={20} />
+              <div className="w-10 h-10 bg-[#efe6d7] rounded-lg flex items-center justify-center">
+                <User className="text-[#17313b]" size={20} />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Unique Contacts</p>
+                <p className="text-sm text-[#5f665f]">Unique Contacts</p>
                 <p className="text-2xl font-bold">
                   {new Set(contacts.map(contact => contact.email)).size}
                 </p>
@@ -133,7 +133,7 @@ export default function AdminContacts() {
                       {contact.email}
                     </Badge>
                   </div>
-                  <p className="text-sm text-gray-500 flex items-center gap-1">
+                  <p className="text-sm text-[#6c675d] flex items-center gap-1">
                     <Calendar size={14} />
                     {formatDate(contact.created_at)}
                   </p>
@@ -182,18 +182,18 @@ export default function AdminContacts() {
               </div>
 
               {/* Message Preview */}
-              <div className="bg-gray-50 rounded-lg p-4">
-                <p className="text-gray-700 line-clamp-2">
+              <div className="bg-[#f7f2e8] rounded-lg p-4">
+                <p className="text-[#3e4948] line-clamp-2">
                   {contact.message}
                 </p>
               </div>
 
               {/* Expanded Message */}
               {expandedId === contact.id && (
-                <div className="mt-4 pt-4 border-t border-gray-200">
+                <div className="mt-4 pt-4 border-t border-[#d8cdb9]">
                   <h4 className="font-medium mb-2">Full Message:</h4>
-                  <div className="bg-white border rounded-lg p-4">
-                    <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
+                  <div className="bg-[#fbf8f1] border border-[#d8cdb9] rounded-lg p-4">
+                    <p className="text-[#3e4948] whitespace-pre-wrap leading-relaxed">
                       {contact.message}
                     </p>
                   </div>
@@ -224,9 +224,9 @@ export default function AdminContacts() {
       {contacts.length === 0 && (
         <Card>
           <CardContent className="text-center py-12">
-            <Mail className="mx-auto mb-4 text-gray-400" size={48} />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No Messages Yet</h3>
-            <p className="text-gray-500 mb-4">
+            <Mail className="mx-auto mb-4 text-[#bcae97]" size={48} />
+            <h3 className="text-lg font-medium text-[#17262d] mb-2">No Messages Yet</h3>
+            <p className="text-[#6c675d] mb-4">
               Contact form submissions will appear here when visitors send messages.
             </p>
             <Button variant="outline" asChild>
