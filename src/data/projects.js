@@ -1,0 +1,40 @@
+export const projects = [
+  {
+    id: "prolabs-bio",
+    title: "Prolabs.bio",
+    description: "Conversion-focused product experience for a WooCommerce supplement store.",
+    image: "/images/projects/prolabs-bio.jpg",
+    category: "WooCommerce",
+    tech_stack: ["WordPress", "WooCommerce", "PHP", "JavaScript"],
+    is_live: true,
+    live_url: "https://prolabs.bio",
+    is_code_available: false,
+    github_url: null,
+  },
+  {
+    id: "byrecruit",
+    title: "ByRecruit",
+    description: "Recruitment platform with streamlined applicant workflows.",
+    image: "/images/projects/byrecruit.jpg",
+    category: "Web App",
+    tech_stack: ["Next.js", "Supabase", "React"],
+    is_live: true,
+    live_url: "https://byrecruit.example",
+    is_code_available: false,
+    github_url: null,
+  },
+  {
+    id: "shawarma-stop",
+    title: "Shawarma Stop",
+    description: "Local restaurant site with ordering and store management.",
+    image: "/images/projects/shawarma-stop.jpg",
+    category: "Business Website",
+    tech_stack: ["WordPress", "Gutenberg"],
+    is_live: false,
+    live_url: null,
+    is_code_available: false,
+    github_url: null,
+  },
+];
+
+export default projects;

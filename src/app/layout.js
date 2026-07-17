@@ -1,13 +1,25 @@
-import { Poppins } from 'next/font/google'
+import { Inter, Manrope, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
-import ConditionalNavigation from '../components/ConditionalNavigation'
+import Header from '../components/Header'
 import Footer from '../components/Footer'
 
-const poppins = Poppins({ 
+const inter = Inter({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
   display: 'swap',
-  variable: '--font-poppins',
+  variable: '--font-body',
+})
+
+const manrope = Manrope({
+  subsets: ['latin'],
+  weight: ['600', '700'],
+  display: 'swap',
+  variable: '--font-display',
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-mono',
 })
 
 export const metadata = {
@@ -110,7 +122,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={poppins.variable}>
+    <html lang="en" className={`${inter.variable} ${manrope.variable} ${jetbrainsMono.variable}`}>
       <head>
         {/* Google Analytics - Replace with your GA4 ID */}
         <script
@@ -128,8 +140,8 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body className={poppins.className}>
-        <ConditionalNavigation />
+      <body className={inter.className}>
+        <Header />
         <main>{children}</main>
         <Footer />
       </body>

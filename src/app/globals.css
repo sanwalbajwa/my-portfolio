@@ -24,6 +24,33 @@
     --input: 39 22% 84%;
     --ring: 174 48% 29%;
     --radius: 0.5rem;
+    /* Design system variables (from COPILOT_PORTFOLIO_DESIGN_README.md) */
+    --ds-background: #f4f2ec;
+    --ds-surface: #e8e5dd;
+    --ds-surface-light: #efede7;
+
+    --ds-text-primary: #151515;
+    --ds-text-secondary: #5e5d58;
+    --ds-text-muted: #7a7871;
+
+    --ds-border: #cac6bb;
+    --ds-border-dark: #333531;
+
+    --ds-dark: #111211;
+    --ds-dark-surface: #1a1b19;
+    --ds-dark-text: #f4f2ec;
+
+    --ds-accent: #b7f34a;
+    --ds-accent-hover: #a3e635;
+    --ds-accent-soft: #dcf9a4;
+
+    --ds-success: #7ed957;
+    --ds-error: #e85d5d;
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-pill: 999px;
   }
 
   .dark {
