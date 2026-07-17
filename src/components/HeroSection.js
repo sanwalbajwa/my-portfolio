@@ -1,6 +1,6 @@
 "use client"
 import { Button } from "./ui/button"
-import { Download, Mail, ArrowRight, Github, Linkedin } from 'lucide-react'
+import { Download, Mail, ArrowRight, Github, Linkedin, BadgeCheck, Braces, Code2, FileCode2 } from 'lucide-react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -225,7 +225,7 @@ export default function HeroSection() {
                   className="absolute -top-4 left-4 sm:-top-6 sm:left-8 bg-white/95 rounded-lg shadow-lg px-3 py-2 border border-[#d8cdb9]"
                 >
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <BadgeCheck className="text-[#2b766f]" size={16} />
                     <span className="text-sm font-medium text-[#3e4948]">Available for work</span>
                   </div>
                 </motion.div>
@@ -250,7 +250,7 @@ export default function HeroSection() {
                 >
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 bg-[#17313b] rounded-lg flex items-center justify-center">
-                      <span className="text-white text-xs font-bold">WP</span>
+                      <FileCode2 className="text-white" size={16} />
                     </div>
                     <div>
                       <div className="text-xs font-medium text-[#3e4948]">WordPress</div>
@@ -267,7 +267,7 @@ export default function HeroSection() {
                 >
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 bg-[#2b766f] rounded-lg flex items-center justify-center">
-                      <span className="text-white text-xs font-bold">JS</span>
+                      <Braces className="text-white" size={16} />
                     </div>
                     <div>
                       <div className="text-xs font-medium text-[#3e4948]">Next.js & React</div>
@@ -282,7 +282,7 @@ export default function HeroSection() {
                   transition={{ duration: 3, repeat: Infinity }}
                   className="absolute top-8 left-4 text-[#bcae97] text-xs font-mono"
                 >
-                  &lt;code/&gt;
+                  <Code2 size={18} />
                 </motion.div>
                 
                 <motion.div
@@ -290,7 +290,7 @@ export default function HeroSection() {
                   transition={{ duration: 4, repeat: Infinity, delay: 1 }}
                   className="absolute bottom-12 right-4 text-[#bcae97] text-xs font-mono"
                 >
-                  {`{ }`}
+                  <Braces size={18} />
                 </motion.div>
               </motion.div>
 

@@ -5,7 +5,7 @@ import { Button } from '../../../components/ui/button'
 import { Input } from '../../../components/ui/input'
 import { Textarea } from '../../../components/ui/textarea'
 import { Badge } from '../../../components/ui/badge'
-import { Plus, Edit, Trash2, Save, X, ExternalLink, Github, ArrowUp, ArrowDown } from 'lucide-react'
+import { Plus, Edit, Trash2, Save, X, ExternalLink, Github, ArrowUp, ArrowDown, CircleCheck, Lock, FolderOpen } from 'lucide-react'
 import { supabase } from '../../../lib/supabase'
 import Image from 'next/image'
 import ProjectImageUpload from '../../../components/ProjectImageUpload'
@@ -478,10 +478,12 @@ export default function AdminProjects() {
                       <div className="flex items-center gap-4 text-sm text-[#6c675d] mb-2">
                         <span>Created: {new Date(project.created_at).toLocaleDateString()}</span>
                         <span className={`flex items-center gap-1 ${project.is_live ? 'text-[#2b766f]' : 'text-[#6c675d]'}`}>
-                          {project.is_live ? '🟢 Live' : '🔒 Private'}
+                          {project.is_live ? <CircleCheck size={14} /> : <Lock size={14} />}
+                          {project.is_live ? 'Live' : 'Private'}
                         </span>
                         <span className={`flex items-center gap-1 ${project.is_code_available ? 'text-[#2b766f]' : 'text-[#6c675d]'}`}>
-                          {project.is_code_available ? '📂 Open Source' : '🔒 Private Code'}
+                          {project.is_code_available ? <FolderOpen size={14} /> : <Lock size={14} />}
+                          {project.is_code_available ? 'Open Source' : 'Private Code'}
                         </span>
                       </div>
                     </div>

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui/card'
 import { Button } from '../../../components/ui/button'
 import { Badge } from '../../../components/ui/badge'
-import { Mail, Trash2, Eye, EyeOff, Calendar, User } from 'lucide-react'
+import { Mail, Trash2, Eye, EyeOff, Calendar, User, Copy } from 'lucide-react'
 import { supabase } from '../../../lib/supabase'
 
 export default function AdminContacts() {
@@ -210,6 +210,7 @@ export default function AdminContacts() {
                       size="sm"
                       onClick={() => navigator.clipboard.writeText(contact.email)}
                     >
+                      <Copy size={14} className="mr-2" />
                       Copy Email
                     </Button>
                   </div>

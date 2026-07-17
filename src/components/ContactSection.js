@@ -52,7 +52,7 @@ export default function ContactSection() {
           from_name: formData.name,
           from_email: formData.email,
           message: formData.message,
-          to_email: 'sanwalbajwa@gmail.com'
+          to_email: 'hello@sanwalbajwa.com'
         },
         EMAILJS_PUBLIC_KEY
       )
@@ -73,8 +73,8 @@ export default function ContactSection() {
     {
       icon: Mail,
       title: "Email",
-      detail: "sanwalbajwa@gmail.com",
-      link: "mailto:sanwalbajwa@gmail.com"
+      detail: "hello@sanwalbajwa.com",
+      link: "mailto:hello@sanwalbajwa.com"
     },
     {
       icon: MapPin,

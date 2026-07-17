@@ -32,7 +32,7 @@ export default function Footer() {
                 <Linkedin size={20} />
               </a>
               <a 
-                href="mailto:sanwalbajwa6026@gmail.com"
+                href="mailto:hello@sanwalbajwa.com"
                 className="text-[#b7c4bf] hover:text-white transition-colors"
               >
                 <Mail size={20} />
@@ -71,7 +71,7 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-4">Get In Touch</h4>
             <div className="space-y-2 text-[#b7c4bf]">
-              <p>sanwalbajwa6026@gmail.com</p>
+              <p>hello@sanwalbajwa.com</p>
               <p>Lahore, Pakistan</p>
             </div>
           </div>
@@ -80,7 +80,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-white/10 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <div className="flex items-center space-x-1 text-[#b7c4bf]">
-            <span>© {currentYear} Sanwal Bajwa. Made with</span>
+            <span>Copyright {currentYear} Sanwal Bajwa. Made with</span>
             <Heart size={16} className="text-red-500" />
           </div>
           <div className="flex space-x-6 mt-4 md:mt-0">

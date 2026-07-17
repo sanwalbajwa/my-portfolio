@@ -97,18 +97,6 @@ export default function SkillsSection() {
           <IconCloud iconSlugs={iconSlugs} />
         </motion.div>
 
-        {/* Floating info badges */}
-        {/* <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 0.6 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg border border-gray-200"
-        >
-          <div className="text-center">
-            <div className="text-sm text-gray-600">Interactive • Rotate with mouse</div>
-          </div>
-        </motion.div> */}
-
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}

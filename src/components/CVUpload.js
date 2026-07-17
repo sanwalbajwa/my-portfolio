@@ -112,7 +112,7 @@ export default function CVUpload({ onCVUpload, currentCV = null }) {
               <div>
                 <p className="font-medium">{currentCV.original_name}</p>
                 <p className="text-sm text-gray-500">
-                  {(currentCV.file_size / 1024 / 1024).toFixed(2)} MB • 
+                  {(currentCV.file_size / 1024 / 1024).toFixed(2)} MB - 
                   Uploaded {new Date(currentCV.upload_date).toLocaleDateString()}
                 </p>
               </div>

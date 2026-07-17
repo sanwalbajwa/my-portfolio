@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
 import { Badge } from "./ui/badge"
 import { Button } from "./ui/button"
-import { ExternalLink, Github, Eye, Lock } from 'lucide-react'
+import { Eye } from 'lucide-react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import ProjectDetailDialog from './ProjectDetailDialog'

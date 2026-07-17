@@ -206,7 +206,7 @@ export default function AdminCV() {
                         )}
                       </div>
                       <p className="text-sm text-[#6c675d]">
-                        {(cv.file_size / 1024 / 1024).toFixed(2)} MB • 
+                        {(cv.file_size / 1024 / 1024).toFixed(2)} MB - 
                         Uploaded {new Date(cv.upload_date).toLocaleDateString()}
                       </p>
                       {cv.description && (

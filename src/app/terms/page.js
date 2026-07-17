@@ -104,7 +104,7 @@ export default function TermsPage() {
               </p>
               <div className="bg-gray-50 p-4 rounded-lg">
                 <p className="text-gray-700">
-                  <strong>Email:</strong> sanwalbajwa@example.com<br />
+                  <strong>Email:</strong> hello@sanwalbajwa.com<br />
                   <strong>Website:</strong> sanwalbajwa.com
                 </p>
               </div>
