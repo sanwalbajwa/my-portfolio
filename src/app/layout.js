@@ -1,6 +1,6 @@
 import { Inter, Manrope, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
-import Header from '../components/Header'
+import ConditionalNavigation from '../components/ConditionalNavigation'
 import Footer from '../components/Footer'
 
 const inter = Inter({
@@ -141,7 +141,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={inter.className}>
-        <Header />
+        <ConditionalNavigation />
         <main>{children}</main>
         <Footer />
       </body>
