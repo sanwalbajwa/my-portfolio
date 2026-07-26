@@ -68,7 +68,7 @@ export const metadata = {
     description: 'Full Stack Developer with 2+ years of experience in WordPress, Next.js, React, and modern web technologies.',
     images: [
       {
-        url: '/og-image.jpg',
+        url: '/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Sanwal Bajwa - Full Stack Developer',
@@ -83,7 +83,7 @@ export const metadata = {
     title: 'Sanwal Bajwa | Full Stack Developer',
     description: 'Full Stack Developer specializing in WordPress, Next.js, and modern web technologies.',
     creator: '@sanwalbajwa',
-    images: ['/og-image.jpg'],
+    images: ['/og-image.png'],
   }, 
 
   // Verification (Add these from Google Search Console, Bing, etc.)
