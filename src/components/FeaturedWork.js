@@ -1,9 +1,9 @@
 "use client"
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
 import { Badge } from "./ui/badge"
 import { Button } from "./ui/button"
-import { ExternalLink, Github, Eye, Lock } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ExternalLink, Github, Eye, Lock } from 'lucide-react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
@@ -12,30 +12,14 @@ import ProjectDetailDialog from './ProjectDetailDialog'
 
 export default function FeaturedWork() {
   const [projects, setProjects] = useState([])
-  const [categories, setCategories] = useState([])
-  const [activeCategory, setActiveCategory] = useState('All')
-  const [filteredProjects, setFilteredProjects] = useState([])
-  const [displayedProjects, setDisplayedProjects] = useState([])
-  const [visibleCount, setVisibleCount] = useState(6)
+  const [activeSlide, setActiveSlide] = useState(0)
   const [selectedProject, setSelectedProject] = useState(null)
   const [showDialog, setShowDialog] = useState(false)
   const [loading, setLoading] = useState(true)
 
-  const PROJECTS_PER_PAGE = 6
-
   useEffect(() => {
     fetchProjectsAndCategories()
   }, [])
-
-  useEffect(() => {
-    filterProjects()
-    setVisibleCount(PROJECTS_PER_PAGE) // Reset visible count when category changes
-  }, [projects, activeCategory])
-
-  useEffect(() => {
-    // Update displayed projects based on visible count
-    setDisplayedProjects(filteredProjects.slice(0, visibleCount))
-  }, [filteredProjects, visibleCount])
 
   const fetchProjectsAndCategories = async () => {
     try {
@@ -56,18 +40,8 @@ export default function FeaturedWork() {
         projectsError = fallback.error
       }
 
-      // Fetch categories
-      const { data: categoriesData, error: categoriesError } = await supabase
-        .from('project_categories')
-        .select('*')
-        .order('name')
-
       if (!projectsError && projectsData) {
         setProjects(projectsData)
-      }
-
-      if (!categoriesError && categoriesData) {
-        setCategories(categoriesData)
       }
     } catch (error) {
       console.error('Error fetching data:', error)
@@ -76,41 +50,209 @@ export default function FeaturedWork() {
     }
   }
 
-  const filterProjects = () => {
-    if (activeCategory === 'All') {
-      setFilteredProjects(projects)
-    } else {
-      const filtered = projects.filter(project => project.category === activeCategory)
-      setFilteredProjects(filtered)
-    }
-  }
-
-  const handleLoadMore = () => {
-    setVisibleCount(prevCount => prevCount + PROJECTS_PER_PAGE)
-  }
-
   const handleProjectClick = (project) => {
     setSelectedProject(project)
     setShowDialog(true)
   }
 
-  // Get unique categories that have projects
-  const categoriesWithProjects = categories.filter(category => 
-    projects.some(project => project.category === category.name)
-  )
+  const filteredProjects = useMemo(() => projects, [projects])
 
-  const tabVariants = {
-    inactive: { 
-      backgroundColor: "transparent", 
-      color: "#5f665f" 
-    },
-    active: { 
-      backgroundColor: "#2b766f", 
-      color: "#FFFFFF" 
+  const getProjectAt = (offset) => {
+    if (filteredProjects.length === 0) {
+      return null
+    }
+
+    const nextIndex = (activeSlide + offset + filteredProjects.length) % filteredProjects.length
+    return filteredProjects[nextIndex]
+  }
+
+  const handlePreviousSlide = () => {
+    setActiveSlide((current) => (
+      current === 0 ? filteredProjects.length - 1 : current - 1
+    ))
+  }
+
+  const handleNextSlide = () => {
+    setActiveSlide((current) => (
+      current === filteredProjects.length - 1 ? 0 : current + 1
+    ))
+  }
+
+  const handleKeyDown = (event) => {
+    if (filteredProjects.length <= 1) {
+      return
+    }
+
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault()
+      handlePreviousSlide()
+    }
+
+    if (event.key === 'ArrowRight') {
+      event.preventDefault()
+      handleNextSlide()
     }
   }
 
-  const hasMoreProjects = visibleCount < filteredProjects.length
+  const handleDragEnd = (_, info) => {
+    if (filteredProjects.length <= 1) {
+      return
+    }
+
+    if (info.offset.x < -80 || info.velocity.x < -500) {
+      handleNextSlide()
+    }
+
+    if (info.offset.x > 80 || info.velocity.x > 500) {
+      handlePreviousSlide()
+    }
+  }
+
+  const carouselProjects = [
+    { project: getProjectAt(-1), position: 'left' },
+    { project: getProjectAt(0), position: 'center' },
+    { project: getProjectAt(1), position: 'right' }
+  ].filter(({ project }, index, items) => (
+    project && items.findIndex(item => item.project?.id === project.id) === index
+  ))
+
+  const ProjectCard = ({ project, position }) => {
+    const isCenter = position === 'center'
+    const isLeft = position === 'left'
+    const slideLabel = isLeft ? 'Previous project' : 'Next project'
+
+    const handleSideCardClick = () => {
+      if (isCenter) {
+        return
+      }
+
+      if (isLeft) {
+        handlePreviousSlide()
+        return
+      }
+
+      handleNextSlide()
+    }
+
+    return (
+      <motion.div
+        layout
+        initial={{ opacity: 0, y: 24 }}
+        animate={{
+          opacity: isCenter ? 1 : 0.5,
+          scale: isCenter ? 1 : 0.86,
+          y: isCenter ? 0 : 22,
+          rotateY: isCenter ? 0 : isLeft ? 5 : -5
+        }}
+        whileHover={isCenter ? { y: -6 } : { opacity: 0.72, scale: 0.9 }}
+        transition={{ duration: 0.35, ease: 'easeOut' }}
+        role={isCenter ? undefined : 'button'}
+        tabIndex={isCenter ? undefined : 0}
+        onClick={handleSideCardClick}
+        onKeyDown={(event) => {
+          if (!isCenter && (event.key === 'Enter' || event.key === ' ')) {
+            event.preventDefault()
+            handleSideCardClick()
+          }
+        }}
+        aria-label={isCenter ? undefined : slideLabel}
+        className={`${isCenter ? 'z-10 md:col-span-4' : 'hidden cursor-pointer md:block md:col-span-3'} min-w-0`}
+        style={{ transformStyle: 'preserve-3d' }}
+      >
+        <Card className={`h-full overflow-hidden border-[#e3d9c8] bg-white py-0 pb-6 transition-all duration-300 group ${
+          isCenter ? 'shadow-xl ring-1 ring-[#2b766f]/10' : 'shadow-sm'
+        }`}>
+          {project.image && (
+            <div className={`${isCenter ? 'h-56 md:h-72' : 'h-48'} relative w-full overflow-hidden`}>
+              <Image
+                src={project.image}
+                alt={project.title}
+                fill
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+              <div className="absolute left-3 top-3">
+                <Badge variant="secondary" className="bg-white/90 backdrop-blur-sm">
+                  {project.category}
+                </Badge>
+              </div>
+            </div>
+          )}
+
+          <CardHeader>
+            <CardTitle className={isCenter ? 'text-2xl' : 'text-xl'}>
+              {project.title}
+            </CardTitle>
+            <CardDescription className="line-clamp-2">
+              {project.description}
+            </CardDescription>
+          </CardHeader>
+
+          <CardContent>
+            <div className="mb-4 flex flex-wrap gap-2">
+              {project.tech_stack && project.tech_stack.slice(0, 3).map((tech) => (
+                <Badge key={tech} variant="secondary" className="text-xs">
+                  {tech}
+                </Badge>
+              ))}
+              {project.tech_stack && project.tech_stack.length > 3 && (
+                <Badge variant="secondary" className="text-xs">
+                  +{project.tech_stack.length - 3}
+                </Badge>
+              )}
+            </div>
+
+            <div className={`grid grid-cols-3 gap-2 ${isCenter ? '' : 'pointer-events-none'}`}>
+              {project.is_live && project.live_url ? (
+                <Button size="sm" variant="outline" asChild>
+                  <a
+                    href={project.live_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center"
+                    aria-label={`Open ${project.title}`}
+                  >
+                    <ExternalLink size={12} />
+                  </a>
+                </Button>
+              ) : (
+                <Button size="sm" variant="outline" disabled>
+                  <Lock size={12} />
+                </Button>
+              )}
+
+              {project.is_code_available && project.github_url ? (
+                <Button size="sm" variant="outline" asChild>
+                  <a
+                    href={project.github_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center"
+                    aria-label={`Open ${project.title} code`}
+                  >
+                    <Github size={12} />
+                  </a>
+                </Button>
+              ) : (
+                <Button size="sm" variant="outline" disabled>
+                  <Lock size={12} />
+                </Button>
+              )}
+
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => handleProjectClick(project)}
+                className="flex items-center justify-center"
+                aria-label={`View ${project.title} details`}
+              >
+                <Eye size={12} />
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
+    )
+  }
 
   if (loading) {
     return (
@@ -118,7 +260,7 @@ export default function FeaturedWork() {
         <div className="px-5 sm:px-8 md:px-10 lg:px-12">
           <div className="text-center mb-12 md:mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-[#17262d] mb-4">
-              Featured Work
+              Selected Engineering Work
             </h2>
             <p className="text-base md:text-lg text-[#5f665f]">Loading projects...</p>
           </div>
@@ -132,153 +274,73 @@ export default function FeaturedWork() {
       <div className="px-5 sm:px-8 md:px-10 lg:px-12">
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-[#17262d] mb-4">
-            Featured Work
+            Selected Engineering Work
           </h2>
-          <p className="text-base md:text-lg text-[#5f665f]">
-            Explore my projects across different technologies
+          <p className="mx-auto max-w-3xl text-base md:text-lg text-[#5f665f]">
+            A selection of full-stack applications and custom WordPress systems built to solve real business requirements.
           </p>
         </div>
 
-        {/* Category Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10 md:mb-12">
-          <motion.button
-            variants={tabVariants}
-            animate={activeCategory === 'All' ? 'active' : 'inactive'}
-            onClick={() => setActiveCategory('All')}
-            className="px-4 py-2 sm:px-6 sm:py-3 rounded-full border-2 border-[#2b766f] text-sm sm:text-base font-medium transition-all duration-200 hover:border-[#17313b]"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            All ({projects.length})
-          </motion.button>
-          
-          {categoriesWithProjects.map((category) => {
-            const projectCount = projects.filter(p => p.category === category.name).length
-            return (
-              <motion.button
-                key={category.id}
-                variants={tabVariants}
-                animate={activeCategory === category.name ? 'active' : 'inactive'}
-                onClick={() => setActiveCategory(category.name)}
-                className="px-4 py-2 sm:px-6 sm:py-3 rounded-full border-2 border-[#2b766f] text-sm sm:text-base font-medium transition-all duration-200 hover:border-[#17313b]"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+        {filteredProjects.length > 0 && (
+          <div className="mb-12">
+            <div className="relative">
+              {filteredProjects.length > 1 && (
+                <>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    onClick={handlePreviousSlide}
+                    className="absolute left-0 top-1/2 z-20 -translate-y-1/2 bg-white/90 shadow-md md:-left-4"
+                    aria-label="Previous project"
+                  >
+                    <ChevronLeft size={18} />
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    onClick={handleNextSlide}
+                    className="absolute right-0 top-1/2 z-20 -translate-y-1/2 bg-white/90 shadow-md md:-right-4"
+                    aria-label="Next project"
+                  >
+                    <ChevronRight size={18} />
+                  </Button>
+                </>
+              )}
+
+              <motion.div
+                layout
+                className="grid min-h-[520px] grid-cols-1 items-center gap-6 md:grid-cols-10 md:gap-4 lg:gap-6"
               >
-                {category.name} ({projectCount})
-              </motion.button>
-            )
-          })}
-        </div>
+                {carouselProjects.map(({ project, position }) => (
+                  <ProjectCard
+                    key={`${project.id}-${position}`}
+                    project={project}
+                    position={position}
+                  />
+                ))}
+              </motion.div>
+            </div>
 
-        {/* Projects Grid */}
-        <motion.div 
-          layout
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12"
-        >
-          {displayedProjects.map((project, index) => (
-            <motion.div
-              key={project.id}
-              layout
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
-            >
-              <Card className="h-full hover:shadow-lg transition-all duration-300 group">
-                {/* Project Image */}
-                {project.image && (
-                  <div className="relative h-48 w-full overflow-hidden rounded-t-lg">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute top-3 left-3">
-                      <Badge variant="secondary" className="bg-white/90 backdrop-blur-sm">
-                        {project.category}
-                      </Badge>
-                    </div>
-                  </div>
-                )}
+            {filteredProjects.length > 1 && (
+              <div className="mt-6 flex items-center justify-center gap-2">
+                {filteredProjects.map((project, index) => (
+                  <button
+                    key={project.id}
+                    type="button"
+                    onClick={() => setActiveSlide(index)}
+                    className={`h-2.5 rounded-full transition-all ${
+                      activeSlide === index ? 'w-8 bg-[#2b766f]' : 'w-2.5 bg-[#d8cdb9] hover:bg-[#8fb3ad]'
+                    }`}
+                    aria-label={`Go to project ${index + 1}`}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        )}
 
-                <CardHeader>
-                  <CardTitle className="text-xl">{project.title}</CardTitle>
-                  <CardDescription className="line-clamp-2">
-                    {project.description}
-                  </CardDescription>
-                </CardHeader>
-
-                <CardContent>
-                  {/* Tech Stack */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tech_stack && project.tech_stack.slice(0, 3).map((tech) => (
-                      <Badge key={tech} variant="secondary" className="text-xs">
-                        {tech}
-                      </Badge>
-                    ))}
-                    {project.tech_stack && project.tech_stack.length > 3 && (
-                      <Badge variant="secondary" className="text-xs">
-                        +{project.tech_stack.length - 3}
-                      </Badge>
-                    )}
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="grid grid-cols-3 gap-2">
-                    {/* Live Site Button */}
-                    {project.is_live && project.live_url ? (
-                      <Button size="sm" variant="outline" asChild>
-                        <a 
-                          href={project.live_url} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="flex items-center justify-center"
-                        >
-                          <ExternalLink size={12} />
-                        </a>
-                      </Button>
-                    ) : (
-                      <Button size="sm" variant="outline" disabled>
-                        <Lock size={12} />
-                      </Button>
-                    )}
-
-                    {/* GitHub Button */}
-                    {project.is_code_available && project.github_url ? (
-                      <Button size="sm" variant="outline" asChild>
-                        <a 
-                          href={project.github_url} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="flex items-center justify-center"
-                        >
-                          <Github size={12} />
-                        </a>
-                      </Button>
-                    ) : (
-                      <Button size="sm" variant="outline" disabled>
-                        <Lock size={12} />
-                      </Button>
-                    )}
-
-                    {/* View More Button */}
-                    <Button 
-                      size="sm" 
-                      variant="outline"
-                      onClick={() => handleProjectClick(project)}
-                      className="flex items-center justify-center"
-                    >
-                      <Eye size={12} />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* No Projects Message */}
         {filteredProjects.length === 0 && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -286,30 +348,12 @@ export default function FeaturedWork() {
             className="text-center py-12"
           >
             <p className="text-gray-500 text-lg">
-              No projects found in {activeCategory === 'All' ? 'any category' : activeCategory}.
+              No projects found.
             </p>
           </motion.div>
         )}
 
-        {/* Load More Button */}
-        {hasMoreProjects && (
-          <div className="text-center mb-8">
-            <Button 
-              onClick={handleLoadMore}
-              size="lg"
-              variant="outline"
-              className="min-w-[200px]"
-            >
-              Load More Projects
-              <span className="ml-2 text-sm text-gray-500">
-                ({displayedProjects.length} of {filteredProjects.length})
-              </span>
-            </Button>
-          </div>
-        )}
-
-        {/* View All Projects Button */}
-        {projects.length > 0 && !hasMoreProjects && (
+        {projects.length > 0 && (
           <div className="text-center">
             <Button asChild size="lg">
               <Link href="/portfolio">
