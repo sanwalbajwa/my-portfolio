@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
 import { Badge } from "./ui/badge"
 import { Button } from "./ui/button"
-import { ChevronLeft, ChevronRight, ExternalLink, Github, Eye, Lock } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
@@ -23,18 +23,32 @@ export default function FeaturedWork() {
 
   const fetchProjectsAndCategories = async () => {
     try {
-      // Fetch ALL projects (removed limit)
       let { data: projectsData, error: projectsError } = await supabase
         .from('projects')
         .select('*')
+        .eq('show_on_home', true)
         .order('display_order', { ascending: true, nullsFirst: false })
         .order('created_at', { ascending: false })
+        .limit(3)
+
+      if (projectsError?.message?.includes('show_on_home')) {
+        const fallback = await supabase
+          .from('projects')
+          .select('*')
+          .order('display_order', { ascending: true, nullsFirst: false })
+          .order('created_at', { ascending: false })
+          .limit(3)
+
+        projectsData = fallback.data
+        projectsError = fallback.error
+      }
 
       if (projectsError?.message?.includes('display_order')) {
         const fallback = await supabase
           .from('projects')
           .select('*')
           .order('created_at', { ascending: false })
+          .limit(3)
 
         projectsData = fallback.data
         projectsError = fallback.error
@@ -55,7 +69,7 @@ export default function FeaturedWork() {
     setShowDialog(true)
   }
 
-  const filteredProjects = useMemo(() => projects, [projects])
+  const filteredProjects = useMemo(() => projects.slice(0, 3), [projects])
 
   const getProjectAt = (offset) => {
     if (filteredProjects.length === 0) {
@@ -137,15 +151,15 @@ export default function FeaturedWork() {
     return (
       <motion.div
         layout
-        initial={{ opacity: 0, y: 24 }}
+        initial={false}
         animate={{
-          opacity: isCenter ? 1 : 0.5,
+          opacity: isCenter ? 1 : 0.72,
           scale: isCenter ? 1 : 0.86,
           y: isCenter ? 0 : 22,
           rotateY: isCenter ? 0 : isLeft ? 5 : -5
         }}
         whileHover={isCenter ? { y: -6 } : { opacity: 0.72, scale: 0.9 }}
-        transition={{ duration: 0.35, ease: 'easeOut' }}
+        transition={{ type: 'spring', stiffness: 180, damping: 24, mass: 0.9 }}
         role={isCenter ? undefined : 'button'}
         tabIndex={isCenter ? undefined : 0}
         onClick={handleSideCardClick}
@@ -156,7 +170,7 @@ export default function FeaturedWork() {
           }
         }}
         aria-label={isCenter ? undefined : slideLabel}
-        className={`${isCenter ? 'z-10 md:col-span-4' : 'hidden cursor-pointer md:block md:col-span-3'} min-w-0`}
+        className={`${isCenter ? 'z-10 md:col-span-4' : 'hidden cursor-pointer md:block md:col-span-3'} min-w-0 transform-gpu`}
         style={{ transformStyle: 'preserve-3d' }}
       >
         <Card className={`h-full overflow-hidden border-[#e3d9c8] bg-white py-0 pb-6 transition-all duration-300 group ${
@@ -201,52 +215,37 @@ export default function FeaturedWork() {
               )}
             </div>
 
-            <div className={`grid grid-cols-3 gap-2 ${isCenter ? '' : 'pointer-events-none'}`}>
-              {project.is_live && project.live_url ? (
-                <Button size="sm" variant="outline" asChild>
-                  <a
-                    href={project.live_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center"
-                    aria-label={`Open ${project.title}`}
-                  >
-                    <ExternalLink size={12} />
-                  </a>
-                </Button>
+            <div className={`mt-6 flex flex-col gap-3 border-t border-[#e3d9c8] pt-4 text-sm font-semibold sm:flex-row sm:items-center sm:justify-between ${isCenter ? '' : 'pointer-events-none'}`}>
+              {project.case_study_url ? (
+                <a
+                  href={project.case_study_url}
+                  className="group inline-flex items-center gap-2 text-[#17262d] transition-colors hover:text-[#2b766f]"
+                >
+                  View Case Study
+                  <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
+                </a>
               ) : (
-                <Button size="sm" variant="outline" disabled>
-                  <Lock size={12} />
-                </Button>
+                <button
+                  type="button"
+                  onClick={() => handleProjectClick(project)}
+                  className="group inline-flex items-center gap-2 text-left text-[#17262d] transition-colors hover:text-[#2b766f]"
+                >
+                  View Case Study
+                  <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
+                </button>
               )}
 
-              {project.is_code_available && project.github_url ? (
-                <Button size="sm" variant="outline" asChild>
-                  <a
-                    href={project.github_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center"
-                    aria-label={`Open ${project.title} code`}
-                  >
-                    <Github size={12} />
-                  </a>
-                </Button>
-              ) : (
-                <Button size="sm" variant="outline" disabled>
-                  <Lock size={12} />
-                </Button>
+              {project.is_live && project.live_url && (
+                <a
+                  href={project.live_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 text-[#2b766f] transition-colors hover:text-[#17313b]"
+                >
+                  Live Project
+                  <ArrowUpRight size={15} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </a>
               )}
-
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => handleProjectClick(project)}
-                className="flex items-center justify-center"
-                aria-label={`View ${project.title} details`}
-              >
-                <Eye size={12} />
-              </Button>
             </div>
           </CardContent>
         </Card>
@@ -270,7 +269,7 @@ export default function FeaturedWork() {
   }
 
   return (
-    <section className="py-16 md:py-20 bg-[#f7f2e8]">
+    <section className="overflow-x-clip py-16 md:py-20 bg-[#f7f2e8]">
       <div className="px-5 sm:px-8 md:px-10 lg:px-12">
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-[#17262d] mb-4">
@@ -283,7 +282,12 @@ export default function FeaturedWork() {
 
         {filteredProjects.length > 0 && (
           <div className="mb-12">
-            <div className="relative">
+            <div
+              className="relative px-1 py-8"
+              tabIndex={0}
+              onKeyDown={handleKeyDown}
+              aria-label="Selected engineering work carousel"
+            >
               {filteredProjects.length > 1 && (
                 <>
                   <Button
@@ -291,7 +295,7 @@ export default function FeaturedWork() {
                     variant="outline"
                     size="icon"
                     onClick={handlePreviousSlide}
-                    className="absolute left-0 top-1/2 z-20 -translate-y-1/2 bg-white/90 shadow-md md:-left-4"
+                    className="absolute left-1 top-1/2 z-20 -translate-y-1/2 bg-white/90 shadow-md"
                     aria-label="Previous project"
                   >
                     <ChevronLeft size={18} />
@@ -301,7 +305,7 @@ export default function FeaturedWork() {
                     variant="outline"
                     size="icon"
                     onClick={handleNextSlide}
-                    className="absolute right-0 top-1/2 z-20 -translate-y-1/2 bg-white/90 shadow-md md:-right-4"
+                    className="absolute right-1 top-1/2 z-20 -translate-y-1/2 bg-white/90 shadow-md"
                     aria-label="Next project"
                   >
                     <ChevronRight size={18} />
@@ -311,11 +315,16 @@ export default function FeaturedWork() {
 
               <motion.div
                 layout
-                className="grid min-h-[520px] grid-cols-1 items-center gap-6 md:grid-cols-10 md:gap-4 lg:gap-6"
+                drag={filteredProjects.length > 1 ? 'x' : false}
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.12}
+                onDragEnd={handleDragEnd}
+                transition={{ type: 'spring', stiffness: 170, damping: 26, mass: 0.9 }}
+                className="grid min-h-[560px] cursor-grab grid-cols-1 items-center gap-6 active:cursor-grabbing md:grid-cols-10 md:gap-4 lg:gap-6"
               >
                 {carouselProjects.map(({ project, position }) => (
                   <ProjectCard
-                    key={`${project.id}-${position}`}
+                    key={project.id}
                     project={project}
                     position={position}
                   />

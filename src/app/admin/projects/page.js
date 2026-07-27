@@ -18,8 +18,10 @@ export default function AdminProjects() {
     image: '',
     category: 'Web Development',
     display_order: '',
+    show_on_home: false,
     is_live: false,
     live_url: '',
+    case_study_url: '',
     is_code_available: true,
     github_url: ''
   }
@@ -31,6 +33,8 @@ export default function AdminProjects() {
   const [showAddForm, setShowAddForm] = useState(false)
   const [showCategoryForm, setShowCategoryForm] = useState(false)
   const [orderColumnAvailable, setOrderColumnAvailable] = useState(true)
+  const [homeColumnAvailable, setHomeColumnAvailable] = useState(true)
+  const [caseStudyColumnAvailable, setCaseStudyColumnAvailable] = useState(true)
   const [newCategoryName, setNewCategoryName] = useState('')
   const [formData, setFormData] = useState(emptyProjectForm)
 
@@ -46,8 +50,16 @@ export default function AdminProjects() {
       .order('display_order', { ascending: true, nullsFirst: false })
       .order('created_at', { ascending: false })
 
-    if (error?.message?.includes('display_order')) {
-      setOrderColumnAvailable(false)
+    if (error?.message?.includes('display_order') || error?.message?.includes('show_on_home') || error?.message?.includes('case_study_url')) {
+      if (error.message.includes('display_order')) {
+        setOrderColumnAvailable(false)
+      }
+      if (error.message.includes('show_on_home')) {
+        setHomeColumnAvailable(false)
+      }
+      if (error.message.includes('case_study_url')) {
+        setCaseStudyColumnAvailable(false)
+      }
       const fallback = await supabase
         .from('projects')
         .select('*')
@@ -57,6 +69,8 @@ export default function AdminProjects() {
       error = fallback.error
     } else if (!error) {
       setOrderColumnAvailable(true)
+      setHomeColumnAvailable(true)
+      setCaseStudyColumnAvailable(true)
     }
     
     if (!error) setProjects(data || [])
@@ -104,6 +118,14 @@ export default function AdminProjects() {
       payload.display_order = formData.display_order === '' ? null : Number(formData.display_order)
     } else {
       delete payload.display_order
+    }
+
+    if (!homeColumnAvailable) {
+      delete payload.show_on_home
+    }
+
+    if (!caseStudyColumnAvailable) {
+      delete payload.case_study_url
     }
 
     return payload
@@ -159,7 +181,9 @@ export default function AdminProjects() {
       ...project,
       tech_stack: Array.isArray(project.tech_stack) ? project.tech_stack.join(', ') : project.tech_stack,
       display_order: project.display_order ?? '',
+      show_on_home: project.show_on_home || false,
       is_live: project.is_live || false,
+      case_study_url: project.case_study_url || '',
       is_code_available: project.is_code_available !== false
     })
     setEditingId(project.id)
@@ -269,6 +293,24 @@ export default function AdminProjects() {
         </Card>
       )}
 
+      {!homeColumnAvailable && (
+        <Card className="mb-6 border-[#d9952f] bg-[#f4dfb9]">
+          <CardContent className="p-4 text-sm text-[#7a4b16]">
+            Home slider selection is ready in the app, but the database migration still needs to be applied.
+            Run the SQL file at supabase/migrations/20260727000000_add_project_show_on_home.sql in Supabase.
+          </CardContent>
+        </Card>
+      )}
+
+      {!caseStudyColumnAvailable && (
+        <Card className="mb-6 border-[#d9952f] bg-[#f4dfb9]">
+          <CardContent className="p-4 text-sm text-[#7a4b16]">
+            Case study links are ready in the app, but the database migration still needs to be applied.
+            Run the SQL file at supabase/migrations/20260727001000_add_project_case_study_url.sql in Supabase.
+          </CardContent>
+        </Card>
+      )}
+
       {/* Add Category Form */}
       {showCategoryForm && (
         <Card className="mb-4">
@@ -371,6 +413,21 @@ export default function AdminProjects() {
             {/* Project Status & URLs */}
             <div className="border border-[#d8cdb9] rounded-lg p-4 bg-[#f7f2e8]">
               <h3 className="font-medium mb-4">Project Status & Links</h3>
+
+              <div className="flex items-center gap-2 mb-4">
+                <input
+                  type="checkbox"
+                  id="show_on_home"
+                  name="show_on_home"
+                  checked={formData.show_on_home}
+                  onChange={handleInputChange}
+                  className="rounded"
+                  disabled={!homeColumnAvailable}
+                />
+                <label htmlFor="show_on_home" className="text-sm font-medium">
+                  Show this project in the home page slider
+                </label>
+              </div>
               
               {/* Live Site Section */}
               <div className="space-y-3 mb-4">
@@ -399,6 +456,17 @@ export default function AdminProjects() {
                     />
                   </div>
                 )}
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-1">Case Study URL</label>
+                <Input
+                  name="case_study_url"
+                  value={formData.case_study_url}
+                  onChange={handleInputChange}
+                  placeholder="https://sanwalbajwa.com/blog/project-case-study"
+                  disabled={!caseStudyColumnAvailable}
+                />
               </div>
 
               {/* Code Availability Section */}
@@ -474,6 +542,16 @@ export default function AdminProjects() {
                         <h3 className="text-xl font-semibold">{project.title}</h3>
                         <Badge variant="outline">{project.category}</Badge>
                         <Badge variant="secondary">Order {getProjectOrder(project, index)}</Badge>
+                        {project.show_on_home && (
+                          <Badge className="bg-[#e0eee9] text-[#2b766f] hover:bg-[#e0eee9]">
+                            Home
+                          </Badge>
+                        )}
+                        {project.case_study_url && (
+                          <Badge className="bg-[#f4dfb9] text-[#7a4b16] hover:bg-[#f4dfb9]">
+                            Case Study
+                          </Badge>
+                        )}
                       </div>
                       <div className="flex items-center gap-4 text-sm text-[#6c675d] mb-2">
                         <span>Created: {new Date(project.created_at).toLocaleDateString()}</span>
@@ -502,6 +580,14 @@ export default function AdminProjects() {
                         <Button variant="outline" size="sm" asChild>
                           <a href={project.github_url} target="_blank" rel="noopener noreferrer">
                             <Github size={14} />
+                          </a>
+                        </Button>
+                      )}
+
+                      {project.case_study_url && (
+                        <Button variant="outline" size="sm" asChild>
+                          <a href={project.case_study_url} target="_blank" rel="noopener noreferrer">
+                            Case Study
                           </a>
                         </Button>
                       )}

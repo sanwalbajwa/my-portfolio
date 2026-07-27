@@ -86,6 +86,11 @@ body {
   font-feature-settings: "rlig" 1, "calt" 1;
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 ::selection {
   background: hsl(var(--accent) / 0.28);
   color: hsl(var(--foreground));
