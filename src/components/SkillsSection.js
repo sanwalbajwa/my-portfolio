@@ -89,8 +89,8 @@ export default function SkillsSection() {
           className="absolute top-8 left-8 bg-white/90 backdrop-blur-sm px-3 py-2 rounded-lg shadow-md border border-gray-200"
         >
           <div className="text-center">
-            <div className="text-lg font-bold text-[#2b766f]">{iconSlugs.length}+</div>
-            <div className="text-xs text-[#6c675d]">Technologies</div>
+            <div className="text-sm font-bold text-[#2b766f]">Full-Stack</div>
+            <div className="text-xs text-[#6c675d]">& CMS Development</div>
           </div>
         </motion.div>
 
