@@ -65,15 +65,15 @@ export default function HeroSection() {
               </h1>
               
               <h2 className="text-lg sm:text-xl md:text-2xl text-[#5f665f] mb-6 md:mb-8">
-                Software Developer | Builds Web and Mobile Apps
+                Software Engineer building web applications and custom business systems
               </h2>
               
               <p className="text-base md:text-lg text-[#3e4948] mb-8 md:mb-10 leading-relaxed">
-                Full-Stack Developer with 2+ years of hands-on experience, currently working as a Software Developer, where I build scalable, performance-driven web solutions.
-                My core expertise lies in PHP, WordPress (custom plugins, themes, WooCommerce) and Next.js, with strong working knowledge of Node.js and modern JavaScript ecosystems.
+                Software Developer with expertise in building full-stack applications, 
+                custom WordPress and WooCommerce systems, and performance-focused web solutions. 
+                I work primarily with Next.js, React, PHP, WordPress, Supabase, and modern JavaScript technologies.
                 <br></br><br></br>
-                On the mobile side, I&apos;m expanding into React Native, backed by prior experience with Flutter & Dart, giving me a solid cross-platform development mindset.
-                I focus on clean architecture, optimized performance, and maintainable code, turning business requirements into reliable, user-friendly applications.
+                I also have cross-platform mobile development experience with Flutter and am currently expanding into React Native.
               </p>
             </motion.div>
 
@@ -225,7 +225,7 @@ export default function HeroSection() {
                 >
                   <div className="flex items-center gap-2">
                     <BadgeCheck className="text-[#2b766f]" size={16} />
-                    <span className="text-sm font-medium text-[#3e4948]">Available for work</span>
+                    <span className="text-sm font-medium text-[#3e4948]">Available for Opportunities</span>
                   </div>
                 </motion.div>
                 
@@ -233,11 +233,11 @@ export default function HeroSection() {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: 1 }}
-                  className="absolute top-5 right-2 sm:top-1/4 sm:-right-8 lg:-right-12 bg-white/95 rounded-lg shadow-lg p-3 border border-[#d8cdb9]"
+                  className="absolute top-5 right-2 sm:top-1/4 sm:-right-8 lg:-right-12 bg-white/95 rounded-lg shadow-lg px-4 py-3 border border-[#d8cdb9]"
                 >
                   <div className="text-center">
-                    <div className="text-lg font-bold text-[#2b766f]">2+</div>
-                    <div className="text-xs text-[#6c675d]">Years Exp</div>
+                    <div className="text-sm font-bold text-[#2b766f]">Remote-Friendly</div>
+                    <div className="text-xs text-[#6c675d]">Flexible Across Time Zones</div>
                   </div>
                 </motion.div>
                 
@@ -252,8 +252,7 @@ export default function HeroSection() {
                       <FileCode2 className="text-white" size={16} />
                     </div>
                     <div>
-                      <div className="text-xs font-medium text-[#3e4948]">WordPress</div>
-                      <div className="text-xs text-[#6c675d]">Expert</div>
+                      <div className="text-xs font-medium text-[#3e4948]">WordPress & WooCommerce</div>
                     </div>
                   </div>
                 </motion.div>
@@ -270,7 +269,6 @@ export default function HeroSection() {
                     </div>
                     <div>
                       <div className="text-xs font-medium text-[#3e4948]">Next.js & React</div>
-                      <div className="text-xs text-[#6c675d]">Expert</div>
                     </div>
                   </div>
                 </motion.div>
