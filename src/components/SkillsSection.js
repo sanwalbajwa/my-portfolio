@@ -83,9 +83,9 @@ export default function SkillsSection() {
   // Icon Cloud Visualization
   const SkillsVisualization = () => {
     return (
-      <div className="relative w-full h-[320px] sm:h-[380px] lg:h-[420px] flex items-center justify-center overflow-hidden">
+      <div className="relative flex h-[320px] w-full items-center justify-center overflow-hidden sm:h-[380px] lg:h-full lg:min-h-[520px]">
         {/* Background */}
-        <div className="absolute inset-0 bg-[#efe6d7]/70 rounded-2xl border border-[#d8cdb9]"></div>
+        <div className="absolute inset-0 rounded-2xl"></div>
         
         {/* Icon Cloud */}
         <motion.div
@@ -159,14 +159,14 @@ export default function SkillsSection() {
           </motion.div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 lg:items-stretch">
           {/* Left Side - Interactive Icon Cloud */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="order-2 lg:order-1"
+            className="order-2 lg:order-1 lg:h-full"
           >
             <SkillsVisualization />
           </motion.div>
