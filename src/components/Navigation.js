@@ -7,7 +7,6 @@ export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
 
   const navItems = [
-    { name: 'Home', href: '/' },
     { name: 'Portfolio', href: '/portfolio' },
     { name: 'Blog', href: '/blog' },
     { name: 'Contact', href: '/#contact' },
@@ -15,10 +14,10 @@ export default function Navigation() {
 
   return (
     <nav className="bg-[#f7f2e8]/90 backdrop-blur-xl border-b border-[#d8cdb9] sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="px-5 sm:px-8 md:px-10 lg:px-12">
         <div className="flex justify-between h-16">
           <div className="flex">
-            <Link href="/" className="flex items-center pr-4 sm:px-4">
+            <Link href="/" className="flex items-center pr-4">
               <div className="flex items-baseline gap-2">
                 <span className="font-bold text-xl sm:text-2xl text-[#17262d] leading-none">
                   Sanwal

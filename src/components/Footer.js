@@ -5,7 +5,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#17313b] text-[#d7d2c7]">
-      <div className="mx-auto flex max-w-7xl flex-col gap-5 px-4 py-8 font-mono text-xs uppercase tracking-[0.16em] sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
+      <div className="flex flex-col gap-5 px-5 py-8 font-mono text-xs uppercase tracking-[0.16em] sm:px-8 md:flex-row md:items-center md:justify-between md:px-10 lg:px-12">
         <p>Copyright {currentYear} Sanwal Bajwa</p>
 
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-8">
@@ -17,9 +17,6 @@ export default function Footer() {
             <Link href="/terms" className="transition-colors hover:text-white">
               Terms
             </Link>
-            <a href="mailto:hello@sanwalbajwa.com" className="transition-colors hover:text-white">
-              Email
-            </a>
           </div>
         </div>
       </div>

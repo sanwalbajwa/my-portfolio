@@ -115,7 +115,7 @@ export default function FeaturedWork() {
   if (loading) {
     return (
       <section className="py-16 md:py-20 bg-[#f7f2e8]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="px-5 sm:px-8 md:px-10 lg:px-12">
           <div className="text-center mb-12 md:mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-[#17262d] mb-4">
               Featured Work
@@ -129,7 +129,7 @@ export default function FeaturedWork() {
 
   return (
     <section className="py-16 md:py-20 bg-[#f7f2e8]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="px-5 sm:px-8 md:px-10 lg:px-12">
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-[#17262d] mb-4">
             Featured Work

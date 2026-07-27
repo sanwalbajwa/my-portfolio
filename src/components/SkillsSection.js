@@ -127,7 +127,7 @@ export default function SkillsSection() {
   if (!mounted) {
     return (
       <section className="py-16 md:py-20 bg-[#f7f2e8]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="px-5 sm:px-8 md:px-10 lg:px-12">
           <div className="text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Skills & Technologies
@@ -141,7 +141,7 @@ export default function SkillsSection() {
 
   return (
     <section className="py-16 md:py-20 bg-[#fbf8f1]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="px-5 sm:px-8 md:px-10 lg:px-12">
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
           <motion.div

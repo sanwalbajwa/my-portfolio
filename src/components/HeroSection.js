@@ -45,8 +45,7 @@ export default function HeroSection() {
   return (
     <section className="relative overflow-hidden bg-[#f7f2e8] py-14 md:py-20 lg:min-h-[80vh] flex items-center">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(217,149,47,0.16),transparent_28%),radial-gradient(circle_at_86%_18%,rgba(43,118,111,0.13),transparent_26%)]" />
-      <div className="absolute inset-x-0 bottom-0 h-px bg-[#d8cdb9]" />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <div className="w-full px-5 sm:px-8 md:px-10 lg:px-12">
         <div className="relative grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
           {/* Left Side - Text Content */}
           <motion.div
