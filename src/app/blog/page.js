@@ -1,6 +1,8 @@
 import { supabase } from '../../lib/supabase'
 import BlogCard from '../../components/BlogCard'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata = {
   title: 'Blog | Web Development & Tech Insights',
   description: 'Thoughts on web development, technology trends, and lessons learned from building digital experiences.',
