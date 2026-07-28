@@ -1,17 +1,17 @@
 import { supabase } from '../../lib/supabase'
-import BlogCard from '../../components/BlogCard'
+import BlogFilterList from '../../components/BlogFilterList'
 
 export const dynamic = 'force-dynamic'
 
 export const metadata = {
   title: 'Blog | Web Development & Tech Insights',
-  description: 'Thoughts on web development, technology trends, and lessons learned from building digital experiences.',
+  description: 'Project breakdowns and practical articles about software engineering, full-stack development, WordPress, WooCommerce, architecture, and performance.',
   alternates: {
     canonical: 'https://sanwalbajwa.com/blog',
   },
   openGraph: {
-    title: 'Blog | Sanwal Bajwa',
-    description: 'Thoughts on web development, technology trends, and lessons learned from building digital experiences.',
+    title: 'Engineering Notes & Case Studies | Sanwal Bajwa',
+    description: 'Project breakdowns and practical articles about software engineering, full-stack development, WordPress, WooCommerce, architecture, and performance.',
     url: 'https://sanwalbajwa.com/blog',
   },
 }
@@ -30,25 +30,20 @@ export default async function Blog() {
 
   return (
     <div className="min-h-screen py-12">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="px-5 sm:px-8 md:px-10 lg:px-12">
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            My Blog
+            Engineering Notes & Case Studies
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Thoughts on web development, technology trends, and lessons learned 
-            from building digital experiences.
+            Project breakdowns and practical articles about software engineering, full-stack development, WordPress, WooCommerce, architecture, and performance.
           </p>
         </div>
 
         {/* Blog Posts */}
         {blogs && blogs.length > 0 ? (
-          <div className="grid gap-8">
-            {blogs.map((blog) => (
-              <BlogCard key={blog.id} blog={blog} />
-            ))}
-          </div>
+          <BlogFilterList blogs={blogs} />
         ) : (
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg">No blog posts found.</p>
