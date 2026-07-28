@@ -89,17 +89,12 @@ body {
 html,
 body {
   max-width: 100%;
-  overflow-x: clip;
-}
-
-main {
-  overflow-x: clip;
+  overflow-x: hidden;
 }
 
 @supports not (overflow-x: clip) {
   html,
-  body,
-  main {
+  body {
     overflow-x: hidden;
   }
 }
